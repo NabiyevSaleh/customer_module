@@ -43,4 +43,17 @@ public class IndividualCustomerDetailsServiceImpl implements IndividualCustomerD
                         .collect(Collectors.toList());
         return individualCustomerDetailsResponses;
     }
+
+    @Override
+    public void update(Integer id, IndividualCustomerDetailsRequest individualCustomerDetailsRequest) {
+        IndividualCustomerDetails individualCustomerDetails = modelMapper
+                .map(individualCustomerDetailsRequest, IndividualCustomerDetails.class);
+
+        individualCustomerDetailsRepository.update(id, individualCustomerDetails);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        individualCustomerDetailsRepository.delete(id);
+    }
 }

@@ -2,6 +2,8 @@ package growlab.customer.repository;
 
 import growlab.customer.domain.IndividualCustomerDetails;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class IndividualCustomerDetailsRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -42,11 +45,49 @@ public class IndividualCustomerDetailsRepository {
         return jdbcTemplate.queryForObject(sql,
                 new MapSqlParameterSource()
                         .addValue("id", id),
-                         individualCustomerDetailsRowMapper);
+                individualCustomerDetailsRowMapper);
     }
 
-    public List<IndividualCustomerDetails> findAll(){
+    public List<IndividualCustomerDetails> findAll() {
         String sql = "SELECT * FROM individual_customer_details";
         return jdbcTemplate.query(sql, individualCustomerDetailsRowMapper);
     }
+
+    public void update(Integer id, IndividualCustomerDetails individualCustomerDetails) {
+        String sql = "UPDATE individual_customer_details SET " +
+                "pin = :pin, " +
+                "customer_id = :customerId, " +
+                "unique_id_name = :uniqueIdName, " +
+                "unique_id_value = :uniqueIdValue, " +
+                "birth_country_id = :birthCountryId, " +
+                "birth_city_id = :birthCityId, " +
+                "id_begin_date = :idBeginDate, " +
+                "id_end_date = :idEndDate " +
+                "image = :image" +
+                "WHERE id = :id";
+
+        jdbcTemplate.update(sql,
+                new MapSqlParameterSource()
+                        .addValue("id", id)
+                        .addValue("pin", individualCustomerDetails.getPin())
+                        .addValue("customerId", individualCustomerDetails.getCustomerId())
+                        .addValue("uniqueIdName", individualCustomerDetails.getUniqueIdName())
+                        .addValue("uniqueIdValue", individualCustomerDetails.getUniqueIdValue())
+                        .addValue("birthCountryId", individualCustomerDetails.getBirthCountryId())
+                        .addValue("birthCityId", individualCustomerDetails.getBirthCityId())
+                        .addValue("idBeginDate", individualCustomerDetails.getIdBeginDate())
+                        .addValue("idEndDate", individualCustomerDetails.getIdEndDate())
+                        .addValue("image", individualCustomerDetails.getImage()));
+    }
+
+    public void delete(Integer id) {
+        String sql = "DELETE FROM individual_customer_details WHERE id = :id";
+        try {
+            jdbcTemplate.update(sql, new MapSqlParameterSource()
+                    .addValue("id", id));
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Individual customer details not found with id: {}", id);
+        }
+    }
 }
+

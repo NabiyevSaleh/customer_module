@@ -11,5 +11,6 @@ public interface IndividualCustomerDetailsService {
     Integer create(IndividualCustomerDetailsRequest individualCustomerDetailsRequest);
     IndividualCustomerDetailsResponse getById(Integer id);
     List<IndividualCustomerDetailsResponse> getAll();
-
+    void update(Integer id, IndividualCustomerDetailsRequest individualCustomerDetailsRequest);
+    void delete(Integer id);
 }

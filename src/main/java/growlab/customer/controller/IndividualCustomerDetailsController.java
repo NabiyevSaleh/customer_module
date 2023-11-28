@@ -23,12 +23,22 @@ public class IndividualCustomerDetailsController {
     }
 
     @GetMapping("/{customer-details-id}")
-    public IndividualCustomerDetailsResponse getById(@PathVariable("customer-details-id") Integer id){
+    public IndividualCustomerDetailsResponse getById(@PathVariable("customer-details-id") Integer id) {
         return individualCustomerDetailsService.getById(id);
     }
 
     @GetMapping
-    public List<IndividualCustomerDetailsResponse> getAll(){
+    public List<IndividualCustomerDetailsResponse> getAll() {
         return individualCustomerDetailsService.getAll();
+    }
+
+    @PutMapping("/{id}")
+    public void update(@RequestBody IndividualCustomerDetailsRequest individualCustomerDetailsRequest, @PathVariable("id") Integer id) {
+        individualCustomerDetailsService.update(id, individualCustomerDetailsRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
+        individualCustomerDetailsService.delete(id);
     }
 }
