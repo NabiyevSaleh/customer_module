@@ -1,13 +1,16 @@
 package growlab.customer.service.impl;
 
 import growlab.customer.domain.IndividualCustomerDetails;
-import growlab.customer.dto.IndividualCustomerDetailsRequest;
-import growlab.customer.dto.IndividualCustomerDetailsResponse;
+import growlab.customer.dto.request.IndividualCustomerDetailsRequest;
+import growlab.customer.dto.response.IndividualCustomerDetailsResponse;
 import growlab.customer.repository.IndividualCustomerDetailsRepository;
 import growlab.customer.service.IndividualCustomerDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +33,14 @@ public class IndividualCustomerDetailsServiceImpl implements IndividualCustomerD
         IndividualCustomerDetailsResponse individualCustomerDetailsResponse = modelMapper
                 .map(individualCustomerDetails, IndividualCustomerDetailsResponse.class);
         return individualCustomerDetailsResponse;
+    }
+
+    @Override
+    public List<IndividualCustomerDetailsResponse> getAll() {
+        List<IndividualCustomerDetailsResponse> individualCustomerDetailsResponses =
+                individualCustomerDetailsRepository.findAll().stream()
+                        .map(customerDetails -> modelMapper.map(customerDetails, IndividualCustomerDetailsResponse.class))
+                        .collect(Collectors.toList());
+        return individualCustomerDetailsResponses;
     }
 }

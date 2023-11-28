@@ -1,11 +1,11 @@
-package growlab.customer.dto;
+package growlab.customer.dto.response;
 
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class IndividualCustomerDetailsRequest {
+public class IndividualCustomerDetailsResponse {
 
     private Integer pin;
     private Integer customerId;
@@ -16,5 +16,4 @@ public class IndividualCustomerDetailsRequest {
     private LocalDate idBeginDate;
     private LocalDate idEndDate;
     private String image;
-
 }

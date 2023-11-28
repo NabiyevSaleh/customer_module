@@ -1,7 +1,6 @@
 package growlab.customer.repository;
 
 import growlab.customer.domain.IndividualCustomerDetails;
-import growlab.customer.dto.IndividualCustomerDetailsRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -9,6 +8,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -42,5 +43,10 @@ public class IndividualCustomerDetailsRepository {
                 new MapSqlParameterSource()
                         .addValue("id", id),
                          individualCustomerDetailsRowMapper);
+    }
+
+    public List<IndividualCustomerDetails> findAll(){
+        String sql = "SELECT * FROM individual_customer_details";
+        return jdbcTemplate.query(sql, individualCustomerDetailsRowMapper);
     }
 }

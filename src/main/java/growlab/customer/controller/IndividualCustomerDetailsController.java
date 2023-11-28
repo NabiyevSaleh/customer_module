@@ -1,13 +1,13 @@
 package growlab.customer.controller;
 
-import growlab.customer.dto.IndividualCustomerDetailsRequest;
-import growlab.customer.dto.IndividualCustomerDetailsResponse;
+import growlab.customer.dto.request.IndividualCustomerDetailsRequest;
+import growlab.customer.dto.response.IndividualCustomerDetailsResponse;
 import growlab.customer.service.IndividualCustomerDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,5 +25,10 @@ public class IndividualCustomerDetailsController {
     @GetMapping("/{customer-details-id}")
     public IndividualCustomerDetailsResponse getById(@PathVariable("customer-details-id") Integer id){
         return individualCustomerDetailsService.getById(id);
+    }
+
+    @GetMapping
+    public List<IndividualCustomerDetailsResponse> getAll(){
+        return individualCustomerDetailsService.getAll();
     }
 }
