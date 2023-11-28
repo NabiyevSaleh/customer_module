@@ -98,6 +98,23 @@ public class RowMapperConfig {
                 .oldValue(rs.getString("old_value"))
                 .newValue(rs.getString("new_value"))
                 .build();
-
     }
+
+    @Bean("countryRowMapper")
+    public RowMapper<Country> getCountryRowMapper() {
+        return (rs, rowNum) -> Country.builder()
+                .id(rs.getInt("id"))
+                .name(rs.getString("name"))
+                .build();
+    }
+
+    @Bean("cityRowMapper")
+    public RowMapper<City> getCityRowMapper() {
+        return (rs, rowNum) -> City.builder()
+                .id(rs.getInt("id"))
+                .countryId(rs.getInt("country_id"))
+                .name(rs.getString("name"))
+                .build();
+    }
+
 }
