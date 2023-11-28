@@ -2,6 +2,7 @@ package growlab.customer.service.impl;
 
 import growlab.customer.domain.IndividualCustomerDetails;
 import growlab.customer.dto.IndividualCustomerDetailsRequest;
+import growlab.customer.dto.IndividualCustomerDetailsResponse;
 import growlab.customer.repository.IndividualCustomerDetailsRepository;
 import growlab.customer.service.IndividualCustomerDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,13 @@ public class IndividualCustomerDetailsServiceImpl implements IndividualCustomerD
                 .map(individualCustomerDetailsRequest, IndividualCustomerDetails.class);
 
         return individualCustomerDetailsRepository.create(individualCustomerDetails);
+    }
+
+    @Override
+    public IndividualCustomerDetailsResponse getById(Integer id) {
+        IndividualCustomerDetails individualCustomerDetails = individualCustomerDetailsRepository.getById(id);
+        IndividualCustomerDetailsResponse individualCustomerDetailsResponse = modelMapper
+                .map(individualCustomerDetails, IndividualCustomerDetailsResponse.class);
+        return individualCustomerDetailsResponse;
     }
 }

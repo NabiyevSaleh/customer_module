@@ -35,4 +35,12 @@ public class IndividualCustomerDetailsRepository {
                 keyHolder);
         return keyHolder.getKey().intValue();
     }
+
+    public IndividualCustomerDetails getById(Integer id) {
+        String sql = "SELECT * FROM individual_customer_details WHERE id = :id";
+        return jdbcTemplate.queryForObject(sql,
+                new MapSqlParameterSource()
+                        .addValue("id", id),
+                         individualCustomerDetailsRowMapper);
+    }
 }
