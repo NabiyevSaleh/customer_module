@@ -1,8 +1,7 @@
 package growlab.customer.config;
 
-import growlab.customer.domain.CorporateCustomerDetails;
-import growlab.customer.domain.Customer;
-import growlab.customer.domain.IndividualCustomerDetails;
+import growlab.customer.domain.*;
+import growlab.customer.enums.ContactType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.RowMapper;
@@ -65,5 +64,27 @@ public class RowMapperConfig {
                 .inn(rs.getInt("inn"))
                 .registerTaxAuthority(rs.getString("register_tax_authority"))
                 .build();
+    }
+
+    @Bean("corporateCustomerShareholderRowMapper")
+    public RowMapper<CorporateCustomerShareholder> getCorporateCustomerShareholderRowMapper() {
+        return (rs, rowNum) -> CorporateCustomerShareholder.builder()
+                .id(rs.getInt("id"))
+                .customerId(rs.getInt("customer_id"))
+                .shareholder(rs.getString("shareholder"))
+                .sharePercent(rs.getInt("share_percent"))
+                .build();
+    }
+
+    @Bean("customerContactDetailRowMapper")
+    public RowMapper<CustomerContactDetails> getCustomerContactDetailRowMapper() {
+        return (rs, rowNum) -> CustomerContactDetails.builder()
+                .id(rs.getInt("id"))
+                .customerId(rs.getInt("customer_id"))
+                .contactType(ContactType.valueOf(rs.getString("contact_type")))
+                .contactValue(rs.getString("contact_value"))
+                .isActive(rs.getBoolean("is_active"))
+                .build();
+
     }
 }

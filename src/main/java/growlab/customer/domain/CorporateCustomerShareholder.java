@@ -1,6 +1,5 @@
 package growlab.customer.domain;
 
-import growlab.customer.enums.ContactType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,12 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CustomerContactDetails {
+public class CorporateCustomerShareholder {
 
     private Integer id;
     private Integer customerId;
-    private ContactType contactType;
-    private String contactValue;
-    private boolean isActive;
+    private String shareholder;
+    private Integer sharePercent;
 
 }

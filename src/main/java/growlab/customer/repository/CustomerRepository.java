@@ -18,7 +18,7 @@ import java.util.List;
 public class CustomerRepository {
 
     private final NamedParameterJdbcTemplate jdbc;
-    private final RowMapper<Customer> rowMapper;
+    private final RowMapper<Customer> customerRowMapper;
 
     public Integer create(CreatedCustomer request) {
         String sql = "INSERT INTO customers (internal_id, name, surname, middlename, legal_country_id, legal_city_id, registration_address1, registration_address2, registration_address3, registration_address4, residential_address1, residential_address2, residential_address3, residential_address4, authority, voen, customer_type, registration_date, created_by, created_at, auth_by, auth_at, status, customer_category) " +
@@ -59,12 +59,12 @@ public class CustomerRepository {
         return jdbc.queryForObject(sql,
                 new MapSqlParameterSource()
                         .addValue("id", id),
-                rowMapper);
+                customerRowMapper);
     }
 
     public List<Customer> getAll() {
         String sql = "SELECT * FROM customers";
-        return jdbc.query(sql, rowMapper);
+        return jdbc.query(sql, customerRowMapper);
     }
 
     public void update(Integer id, UpdatedCustomer request) {
