@@ -87,4 +87,17 @@ public class RowMapperConfig {
                 .build();
 
     }
+
+    @Bean("recordLogRowMapper")
+    public RowMapper<RecordLogs> getRecordLogRowMapper() {
+        return (rs, rowNum) -> RecordLogs.builder()
+                .id(rs.getInt("id"))
+                .eventTime(rs.getTimestamp("event_time").toLocalDateTime())
+                .customerId(rs.getInt("customer_id"))
+                .parameter(rs.getString("parameter"))
+                .oldValue(rs.getString("old_value"))
+                .newValue(rs.getString("new_value"))
+                .build();
+
+    }
 }
