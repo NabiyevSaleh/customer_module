@@ -66,7 +66,7 @@ public class IndividualCustomerDetailsRepository {
                 "image = :image" +
                 "WHERE id = :id";
 
-        jdbcTemplate.update(sql,
+        jdbc.update(sql,
                 new MapSqlParameterSource()
                         .addValue("id", id)
                         .addValue("pin", individualCustomerDetails.getPin())
@@ -83,7 +83,7 @@ public class IndividualCustomerDetailsRepository {
     public void delete(Integer id) {
         String sql = "DELETE FROM individual_customer_details WHERE id = :id";
         try {
-            jdbcTemplate.update(sql, new MapSqlParameterSource()
+            jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
         } catch (EmptyResultDataAccessException e) {
             log.error("Individual customer details not found with id: {}", id);
