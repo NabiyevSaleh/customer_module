@@ -1,20 +1,12 @@
-package growlab.customer.domain;
+package growlab.customer.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class Customer {
+public class UpdatedCustomer {
 
-    private Integer id;
-    private Integer internalId;
     private String name;
     private String surname;
     private String middleName;
@@ -30,12 +22,7 @@ public class Customer {
     private String residentialAddress4;
     private String authority;
     private Integer voen;
-    private String customerType;
     private LocalDate registrationDate;
-    private Integer createdBy;
-    private LocalDate createdAt;
-    private Integer authBy;
-    private LocalDate authAt;
     private boolean status;
     private String customerCategory;
 

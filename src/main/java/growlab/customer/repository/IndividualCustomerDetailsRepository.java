@@ -15,14 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IndividualCustomerDetailsRepository {
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<IndividualCustomerDetails> individualCustomerDetailsRowMapper;
 
     public Integer create(IndividualCustomerDetails individualCustomerDetails) {
         String sql = "INSERT INTO individual_customer_details (pin, customer_id, unique_id_name, unique_id_value, birth_country_id, birth_city_id, id_begin_date, id_end_date, image ) " +
                 "VALUES(:pin, :customerId, :uniqueIdName, :uniqueIdValue, :birthCountryId, :birthCityId, :idBeginDate, :idEndDate, :image)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(sql,
+        jdbc.update(sql,
                 new MapSqlParameterSource()
                         .addValue("pin", individualCustomerDetails.getPin())
                         .addValue("customerId", individualCustomerDetails.getCustomerId())
@@ -39,7 +39,7 @@ public class IndividualCustomerDetailsRepository {
 
     public IndividualCustomerDetails getById(Integer id) {
         String sql = "SELECT * FROM individual_customer_details WHERE id = :id";
-        return jdbcTemplate.queryForObject(sql,
+        return jdbc.queryForObject(sql,
                 new MapSqlParameterSource()
                         .addValue("id", id),
                          individualCustomerDetailsRowMapper);
@@ -47,6 +47,6 @@ public class IndividualCustomerDetailsRepository {
 
     public List<IndividualCustomerDetails> findAll(){
         String sql = "SELECT * FROM individual_customer_details";
-        return jdbcTemplate.query(sql, individualCustomerDetailsRowMapper);
+        return jdbc.query(sql, individualCustomerDetailsRowMapper);
     }
 }
