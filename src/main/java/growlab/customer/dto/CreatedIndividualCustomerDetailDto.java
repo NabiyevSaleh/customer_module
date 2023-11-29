@@ -1,20 +1,12 @@
-package growlab.customer.domain;
+package growlab.customer.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class IndividualCustomerDetails {
+public class CreatedIndividualCustomerDetailDto {
 
-    private Integer id;
-    private Integer customerId;
     private String pin;
     private String uniqueIdName;
     private String uniqueIdValue;
@@ -28,10 +20,5 @@ public class IndividualCustomerDetails {
     private String maritalStatus;
     private String workPlace;
     private String position;
-    //birtday
-    //cins
-    //evli/subay
-    //ish yeri
-    //vezifesi
 
 }

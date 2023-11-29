@@ -1,9 +1,9 @@
-package growlab.customer.dto.request;
+package growlab.customer.dto;
 
 import lombok.Data;
 
 @Data
-public class CreatedCorporateCustomerDetails {
+public class CreatedCorporateCustomerDetail {
 
     private Integer customerId;
     private Integer inn;

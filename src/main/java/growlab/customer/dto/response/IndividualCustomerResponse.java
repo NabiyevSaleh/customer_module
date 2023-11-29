@@ -7,12 +7,11 @@ import java.util.List;
 
 @Data
 public class IndividualCustomerResponse {
+
     private Integer internalId;
     private String name;
     private String surname;
     private String middleName;
-    private Integer legalCountryId;
-    private Integer legalCityId;
     private String registrationAddress1;
     private String registrationAddress2;
     private String registrationAddress3;
@@ -23,14 +22,13 @@ public class IndividualCustomerResponse {
     private String residentialAddress4;
     private String authority;
     private Integer voen;
-    private String customerType;
-    private LocalDate registrationDate;
     private Integer createdBy;
     private LocalDate createdAt;
     private Integer authBy;
     private LocalDate authAt;
     private Integer status;
     private String customerCategory;
-    private IndividualCustomerDetailsResponse individualCustomerDetailsResponse;
+    private IndividualCustomerDetailResponse individualCustomerDetailResponse;
     private List<CustomerContactDetailResponse> customerContactDetailResponses;
+
 }

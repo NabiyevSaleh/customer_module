@@ -2,6 +2,7 @@ package growlab.customer.config;
 
 import growlab.customer.domain.*;
 import growlab.customer.enums.ContactType;
+import growlab.customer.enums.CustomerType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,13 +12,13 @@ import org.springframework.jdbc.core.RowMapper;
 public class RowMapperConfig {
 
     @Bean("individualCustomerDetailsRowMapper")
-    public RowMapper<IndividualCustomerDetails> getIndividualCustomerDetailsRowMapper() {
-        return (rs, rowNum) -> IndividualCustomerDetails.builder()
+    public RowMapper<IndividualCustomerDetail> getIndividualCustomerDetailsRowMapper() {
+        return (rs, rowNum) -> IndividualCustomerDetail.builder()
                 .id(rs.getInt("id"))
-                .pin(rs.getInt("pin"))
+                .pin(rs.getString("pin"))
                 .uniqueIdName(rs.getString("unique_id_name"))
                 .uniqueIdValue(rs.getString("unique_id_value"))
-                .birthCountryId(rs.getInt("birth+_country_id"))
+                .birthCountryId(rs.getInt("birth_country_id"))
                 .birthCityId(rs.getInt("birth_city_id"))
                 .idBeginDate(rs.getDate("id_begin_date").toLocalDate())
                 .idEndDate(rs.getDate("id_end_date").toLocalDate())
@@ -44,21 +45,21 @@ public class RowMapperConfig {
                 .residentialAddress3(rs.getString("residential_address3"))
                 .residentialAddress4(rs.getString("residential_address4"))
                 .authority(rs.getString("authority"))
-                .voen(rs.getInt("voen"))
-                .customerType(rs.getString("customer_type"))
+                .voen(rs.getString("voen"))
+                .customerType(CustomerType.valueOf(rs.getString("customer_type")))
                 .registrationDate(rs.getDate("registration_date").toLocalDate())
                 .createdBy(rs.getInt("created_by"))
-                .createdAt(rs.getDate("created_at").toLocalDate())
+                .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
                 .authBy(rs.getInt("auth_by"))
-                .authAt(rs.getDate("auth_at").toLocalDate())
-                .status(rs.getBoolean("status"))
+                .authAt(rs.getTimestamp("auth_at").toLocalDateTime())
+                .status(rs.getInt("status"))
                 .customerCategory(rs.getString("customer_category"))
                 .build();
     }
 
     @Bean("corporateCustomerDetailRowMapper")
-    public RowMapper<CorporateCustomerDetails> getCorporateCustomerDetailRowMapper() {
-        return (rs, rowNum) -> CorporateCustomerDetails.builder()
+    public RowMapper<CorporateCustomerDetail> getCorporateCustomerDetailRowMapper() {
+        return (rs, rowNum) -> CorporateCustomerDetail.builder()
                 .id(rs.getInt("id"))
                 .customerId(rs.getInt("customer_id"))
                 .inn(rs.getInt("inn"))
@@ -72,25 +73,25 @@ public class RowMapperConfig {
                 .id(rs.getInt("id"))
                 .customerId(rs.getInt("customer_id"))
                 .shareholder(rs.getString("shareholder"))
-                .sharePercent(rs.getInt("share_percent"))
+                .sharePercent(rs.getDouble("share_percent"))
                 .build();
     }
 
     @Bean("customerContactDetailRowMapper")
-    public RowMapper<CustomerContactDetails> getCustomerContactDetailRowMapper() {
-        return (rs, rowNum) -> CustomerContactDetails.builder()
+    public RowMapper<CustomerContactDetail> getCustomerContactDetailRowMapper() {
+        return (rs, rowNum) -> CustomerContactDetail.builder()
                 .id(rs.getInt("id"))
                 .customerId(rs.getInt("customer_id"))
                 .contactType(ContactType.valueOf(rs.getString("contact_type")))
                 .contactValue(rs.getString("contact_value"))
-                .isActive(rs.getBoolean("is_active"))
+                .isActive(rs.getInt("is_active"))
                 .build();
 
     }
 
     @Bean("recordLogRowMapper")
-    public RowMapper<RecordLogs> getRecordLogRowMapper() {
-        return (rs, rowNum) -> RecordLogs.builder()
+    public RowMapper<RecordLog> getRecordLogRowMapper() {
+        return (rs, rowNum) -> RecordLog.builder()
                 .id(rs.getInt("id"))
                 .eventTime(rs.getTimestamp("event_time").toLocalDateTime())
                 .customerId(rs.getInt("customer_id"))

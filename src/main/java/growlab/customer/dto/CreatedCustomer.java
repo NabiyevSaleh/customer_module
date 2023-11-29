@@ -1,4 +1,4 @@
-package growlab.customer.dto.request;
+package growlab.customer.dto;
 
 import lombok.Data;
 
@@ -22,7 +22,7 @@ public class CreatedCustomer {
     private String residentialAddress3;
     private String residentialAddress4;
     private String authority;
-    private Integer voen;
+    private String voen;
     private String customerType;
     private LocalDate registrationDate;
     private Integer createdBy;

@@ -1,11 +1,13 @@
 package growlab.customer.domain;
 
+import growlab.customer.enums.CustomerType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -30,12 +32,12 @@ public class Customer {
     private String residentialAddress4;
     private String authority;
     private String voen;
-    private String customerType;  // C, I
+    private CustomerType customerType;
     private LocalDate registrationDate;
     private Integer createdBy;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     private Integer authBy;
-    private LocalDate authAt;
+    private LocalDateTime authAt;
     private Integer status;
     private String customerCategory;
 

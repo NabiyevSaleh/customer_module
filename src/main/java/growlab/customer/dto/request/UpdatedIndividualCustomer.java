@@ -1,17 +1,14 @@
 package growlab.customer.dto.request;
 
+import growlab.customer.dto.UpdatedIndividualCustomerDetailDto;
 import lombok.Data;
 
-import java.time.LocalDate;
-
 @Data
-public class UpdatedCustomer {
+public class UpdatedIndividualCustomer {
 
     private String name;
     private String surname;
     private String middleName;
-    private Integer legalCountryId;
-    private Integer legalCityId;
     private String registrationAddress1;
     private String registrationAddress2;
     private String registrationAddress3;
@@ -21,9 +18,8 @@ public class UpdatedCustomer {
     private String residentialAddress3;
     private String residentialAddress4;
     private String authority;
-    private Integer voen;
-    private LocalDate registrationDate;
-    private boolean status;
+    private String voen;
+    private Integer status;
     private String customerCategory;
-
+    private UpdatedIndividualCustomerDetailDto detail;
 }

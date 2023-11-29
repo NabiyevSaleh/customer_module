@@ -1,7 +1,6 @@
 package growlab.customer.repository;
 
 import growlab.customer.domain.City;
-import growlab.customer.dto.request.CreatedCity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -19,13 +18,13 @@ public class CityRepository {
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<City> cityRowMapper;
 
-    public Integer create(CreatedCity request) {
+    public Integer create(City city) {
         String sql = "INSERT INTO cities (country_id, name) VALUES (:countryId, :name)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("countryId", request.getCountryId())
-                        .addValue("name", request.getName()),
+                        .addValue("countryId", city.getCountryId())
+                        .addValue("name", city.getName()),
                 keyHolder);
         return keyHolder.getKey().intValue();
     }

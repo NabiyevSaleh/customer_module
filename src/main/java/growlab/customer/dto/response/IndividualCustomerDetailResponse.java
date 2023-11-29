@@ -1,14 +1,13 @@
-package growlab.customer.dto.request;
+package growlab.customer.dto.response;
 
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class IndividualCustomerDetailsRequest {
+public class IndividualCustomerDetailResponse {
 
-    private String pin;
-    private Integer customerId;
+    private Integer pin;
     private String uniqueIdName;
     private String uniqueIdValue;
     private Integer birthCountryId;
@@ -21,5 +20,4 @@ public class IndividualCustomerDetailsRequest {
     private String maritalStatus;
     private String workPlace;
     private String position;
-
 }

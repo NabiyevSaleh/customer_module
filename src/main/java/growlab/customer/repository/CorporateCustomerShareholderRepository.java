@@ -1,11 +1,6 @@
 package growlab.customer.repository;
 
-import growlab.customer.domain.CorporateCustomerDetails;
 import growlab.customer.domain.CorporateCustomerShareholder;
-import growlab.customer.dto.request.CreatedCorporateCustomerDetails;
-import growlab.customer.dto.request.CreatedCorporateCustomerShareholder;
-import growlab.customer.dto.request.UpdatedCorporateCustomerDetails;
-import growlab.customer.dto.request.UpdatedCorporateCustomerShareholder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -23,14 +18,14 @@ public class CorporateCustomerShareholderRepository {
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<CorporateCustomerShareholder> corporateCustomerShareholderRowMapper;
 
-    public Integer create(CorporateCustomerShareholder request) {
+    public Integer create(CorporateCustomerShareholder shareholder) {
         String sql = "INSERT INTO corporate_customer_shareholder (customer_id, shareholder, share_percent) VALUES (:customerId, :shareholder, :sharePercent)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("customerId", request.getCustomerId())
-                        .addValue("shareholder", request.getShareholder())
-                        .addValue("sharePercent", request.getSharePercent()),
+                        .addValue("customerId", shareholder.getCustomerId())
+                        .addValue("shareholder", shareholder.getShareholder())
+                        .addValue("sharePercent", shareholder.getSharePercent()),
                 keyHolder);
         return keyHolder.getKey().intValue();
     }
@@ -42,17 +37,18 @@ public class CorporateCustomerShareholderRepository {
                         .addValue("id", id),
                 corporateCustomerShareholderRowMapper);
     }
+
     public List<CorporateCustomerShareholder> getAll() {
         String sql = "SELECT * FROM corporate_customer_shareholder";
         return jdbc.query(sql, corporateCustomerShareholderRowMapper);
     }
 
-    public void update(Integer id, UpdatedCorporateCustomerShareholder request) {
+    public void update(Integer id, CorporateCustomerShareholder shareholder) {
         String sql = "UPDATE corporate_customer_shareholder SET shareholder = :shareholder, share_percent = :sharePercent WHERE id = :id";
         jdbc.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("shareholder", request.getShareholder())
-                        .addValue("sharePercent", request.getSharePercent())
+                        .addValue("shareholder", shareholder.getShareholder())
+                        .addValue("sharePercent", shareholder.getSharePercent())
                         .addValue("id", id));
     }
 

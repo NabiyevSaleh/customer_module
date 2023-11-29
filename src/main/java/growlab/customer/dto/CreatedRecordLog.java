@@ -1,4 +1,4 @@
-package growlab.customer.dto.request;
+package growlab.customer.dto;
 
 import lombok.Data;
 

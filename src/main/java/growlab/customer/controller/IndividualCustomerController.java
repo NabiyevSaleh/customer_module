@@ -1,8 +1,6 @@
 package growlab.customer.controller;
 
-import growlab.customer.dto.request.CreateIndividualCustomerRequest;
-import growlab.customer.dto.request.IndividualCustomerDetailsRequest;
-import growlab.customer.service.IndividualCustomerDetailsService;
+import growlab.customer.dto.request.CreatedIndividualCustomer;
 import growlab.customer.service.IndividualCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,7 @@ public class IndividualCustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody CreateIndividualCustomerRequest createIndividualCustomerRequest) {
-        individualCustomerService.create(createIndividualCustomerRequest);
+    public void create(@RequestBody CreatedIndividualCustomer createdIndividualCustomer) {
+        individualCustomerService.create(createdIndividualCustomer);
     }
 }
