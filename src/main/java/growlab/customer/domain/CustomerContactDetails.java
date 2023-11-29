@@ -16,6 +16,6 @@ public class CustomerContactDetails {
     private Integer customerId;
     private ContactType contactType;
     private String contactValue;
-    private boolean isActive;
+    private Integer isActive;
 
 }

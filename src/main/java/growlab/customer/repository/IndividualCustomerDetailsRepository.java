@@ -21,21 +21,26 @@ public class IndividualCustomerDetailsRepository {
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<IndividualCustomerDetails> individualCustomerDetailsRowMapper;
 
-    public Integer create(IndividualCustomerDetails individualCustomerDetails) {
-        String sql = "INSERT INTO individual_customer_details (pin, customer_id, unique_id_name, unique_id_value, birth_country_id, birth_city_id, id_begin_date, id_end_date, image ) " +
-                "VALUES(:pin, :customerId, :uniqueIdName, :uniqueIdValue, :birthCountryId, :birthCityId, :idBeginDate, :idEndDate, :image)";
+    public Integer create(Integer individualCustomerId, IndividualCustomerDetails individualCustomerDetails) {
+        String sql = "INSERT INTO individual_customer_details (pin, customer_id, unique_id_name, unique_id_value, birth_country_id, birth_city_id, id_begin_date, id_end_date, image, birth_date, gender, marital_status, work_place, position) " +
+                "VALUES(:pin, :customerId, :uniqueIdName, :uniqueIdValue, :birthCountryId, :birthCityId, :idBeginDate, :idEndDate, :image, :birthDate, :gender, :maritalStatus, :workPlace, :position)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
                         .addValue("pin", individualCustomerDetails.getPin())
-                        .addValue("customerId", individualCustomerDetails.getCustomerId())
+                        .addValue("customerId", individualCustomerId)
                         .addValue("uniqueIdName", individualCustomerDetails.getUniqueIdName())
                         .addValue("uniqueIdValue", individualCustomerDetails.getUniqueIdValue())
                         .addValue("birthCountryId", individualCustomerDetails.getBirthCountryId())
                         .addValue("birthCityId", individualCustomerDetails.getBirthCityId())
                         .addValue("idBeginDate", individualCustomerDetails.getIdBeginDate())
                         .addValue("idEndDate", individualCustomerDetails.getIdEndDate())
-                        .addValue("image", individualCustomerDetails.getImage()),
+                        .addValue("image", individualCustomerDetails.getImage())
+                        .addValue("birthDate", individualCustomerDetails.getBirthDate())
+                        .addValue("gender", individualCustomerDetails.getGender())
+                        .addValue("maritalStatus", individualCustomerDetails.getMaritalStatus())
+                        .addValue("workPlace", individualCustomerDetails.getWorkPlace())
+                        .addValue("position", individualCustomerDetails.getPosition()),
                 keyHolder);
         return keyHolder.getKey().intValue();
     }
@@ -64,6 +69,11 @@ public class IndividualCustomerDetailsRepository {
                 "id_begin_date = :idBeginDate, " +
                 "id_end_date = :idEndDate " +
                 "image = :image" +
+                "birth_date = :birthDate" +
+                "gender = :gender" +
+                "marital_status = :maritalStatus" +
+                "work_place = :workPlace" +
+                "position = :position" +
                 "WHERE id = :id";
 
         jdbc.update(sql,
@@ -77,7 +87,12 @@ public class IndividualCustomerDetailsRepository {
                         .addValue("birthCityId", individualCustomerDetails.getBirthCityId())
                         .addValue("idBeginDate", individualCustomerDetails.getIdBeginDate())
                         .addValue("idEndDate", individualCustomerDetails.getIdEndDate())
-                        .addValue("image", individualCustomerDetails.getImage()));
+                        .addValue("image", individualCustomerDetails.getImage())
+                        .addValue("birthDate", individualCustomerDetails.getBirthDate())
+                        .addValue("gender", individualCustomerDetails.getGender())
+                        .addValue("maritalStatus", individualCustomerDetails.getMaritalStatus())
+                        .addValue("workPlace", individualCustomerDetails.getWorkPlace())
+                        .addValue("position", individualCustomerDetails.getPosition()));
     }
 
     public void delete(Integer id) {

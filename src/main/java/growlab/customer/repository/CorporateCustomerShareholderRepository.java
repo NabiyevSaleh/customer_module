@@ -23,7 +23,7 @@ public class CorporateCustomerShareholderRepository {
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<CorporateCustomerShareholder> corporateCustomerShareholderRowMapper;
 
-    public Integer create(CreatedCorporateCustomerShareholder request) {
+    public Integer create(CorporateCustomerShareholder request) {
         String sql = "INSERT INTO corporate_customer_shareholder (customer_id, shareholder, share_percent) VALUES (:customerId, :shareholder, :sharePercent)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,

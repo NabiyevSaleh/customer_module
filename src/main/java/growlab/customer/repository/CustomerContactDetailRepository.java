@@ -20,7 +20,7 @@ public class CustomerContactDetailRepository {
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<CustomerContactDetails> customerContactDetailRowMapper;
 
-    public Integer create(CreatedCustomerContactDetail request) {
+    public Integer create(CustomerContactDetails request) {
         String sql = "INSERT INTO customer_contact_details (customer_id, contact_type, contact_value, is_active) VALUES (:customerId, :contactType, :contactValue, :isActive)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
@@ -28,7 +28,7 @@ public class CustomerContactDetailRepository {
                         .addValue("customerId", request.getCustomerId())
                         .addValue("contactType", request.getContactType())
                         .addValue("contactValue", request.getContactValue())
-                        .addValue("isActive", request.isActive()),
+                        .addValue("isActive", request.getIsActive()),
                 keyHolder);
         return keyHolder.getKey().intValue();
     }

@@ -15,7 +15,7 @@ public class IndividualCustomerDetails {
 
     private Integer id;
     private Integer customerId;
-    private Integer pin;
+    private String pin;
     private String uniqueIdName;
     private String uniqueIdValue;
     private Integer birthCountryId;
@@ -23,5 +23,15 @@ public class IndividualCustomerDetails {
     private LocalDate idBeginDate;
     private LocalDate idEndDate;
     private String image;
+    private LocalDate birthDate;
+    private String gender;
+    private String maritalStatus;
+    private String workPlace;
+    private String position;
+    //birtday
+    //cins
+    //evli/subay
+    //ish yeri
+    //vezifesi
 
 }

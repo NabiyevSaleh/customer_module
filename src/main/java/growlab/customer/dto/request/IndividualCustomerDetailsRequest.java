@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Data
 public class IndividualCustomerDetailsRequest {
 
-    private Integer pin;
+    private String pin;
     private Integer customerId;
     private String uniqueIdName;
     private String uniqueIdValue;
@@ -16,5 +16,10 @@ public class IndividualCustomerDetailsRequest {
     private LocalDate idBeginDate;
     private LocalDate idEndDate;
     private String image;
+    private LocalDate birthDate;
+    private String gender;
+    private String maritalStatus;
+    private String workPlace;
+    private String position;
 
 }
