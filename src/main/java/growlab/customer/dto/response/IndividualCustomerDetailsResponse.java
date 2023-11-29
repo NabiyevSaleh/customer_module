@@ -16,4 +16,9 @@ public class IndividualCustomerDetailsResponse {
     private LocalDate idBeginDate;
     private LocalDate idEndDate;
     private String image;
+    private LocalDate birthDate;
+    private String gender;
+    private String maritalStatus;
+    private String workPlace;
+    private String position;
 }

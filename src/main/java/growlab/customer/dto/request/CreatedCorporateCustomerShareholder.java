@@ -7,6 +7,6 @@ public class CreatedCorporateCustomerShareholder {
 
     private Integer customerId;
     private String shareholder;
-    private Integer sharePercent;
+    private Double sharePercent;
 
 }

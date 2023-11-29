@@ -14,6 +14,6 @@ public class CorporateCustomerShareholder {
     private Integer id;
     private Integer customerId;
     private String shareholder;
-    private Integer sharePercent;
+    private Double sharePercent;
 
 }

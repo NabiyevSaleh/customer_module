@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CorporateCustomerDetails {
+public class CorporateCustomerDetails { //sil
 
     private Integer id;
     private Integer customerId;

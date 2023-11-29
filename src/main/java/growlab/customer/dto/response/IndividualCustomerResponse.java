@@ -1,19 +1,12 @@
-package growlab.customer.domain;
+package growlab.customer.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class Customer {
-
-    private Integer id;
+public class IndividualCustomerResponse {
     private Integer internalId;
     private String name;
     private String surname;
@@ -29,8 +22,8 @@ public class Customer {
     private String residentialAddress3;
     private String residentialAddress4;
     private String authority;
-    private String voen;
-    private String customerType;  // C, I
+    private Integer voen;
+    private String customerType;
     private LocalDate registrationDate;
     private Integer createdBy;
     private LocalDate createdAt;
@@ -38,5 +31,6 @@ public class Customer {
     private LocalDate authAt;
     private Integer status;
     private String customerCategory;
-
+    private IndividualCustomerDetailsResponse individualCustomerDetailsResponse;
+    private List<CustomerContactDetailResponse> customerContactDetailResponses;
 }

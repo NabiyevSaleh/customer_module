@@ -24,7 +24,7 @@ public class IndividualCustomerDetailsServiceImpl implements IndividualCustomerD
         IndividualCustomerDetails individualCustomerDetails = modelMapper
                 .map(individualCustomerDetailsRequest, IndividualCustomerDetails.class);
 
-        return individualCustomerDetailsRepository.create(individualCustomerDetails);
+        return individualCustomerDetailsRepository.create(individualCustomerDetailsRequest.getCustomerId(), individualCustomerDetails);
     }
 
     @Override
