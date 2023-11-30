@@ -1,7 +1,10 @@
 package growlab.customer.repository;
 
 import growlab.customer.domain.CorporateCustomerShareholder;
+import growlab.customer.domain.IndividualCustomerDetail;
+import growlab.customer.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -36,6 +39,19 @@ public class CorporateCustomerShareholderRepository {
                 new MapSqlParameterSource()
                         .addValue("id", id),
                 corporateCustomerShareholderRowMapper);
+    }
+
+    public List<CorporateCustomerShareholder> getByCustomerId(Integer customerId) {
+        String sql = "SELECT * FROM corporate_customer_shareholder WHERE customer_id = :customerId";
+        try {
+            List<CorporateCustomerShareholder> result = jdbc.query(sql,
+                    new MapSqlParameterSource()
+                            .addValue("customerId", customerId),
+                    corporateCustomerShareholderRowMapper);
+            return result;
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("ShareHolder not found");
+        }
     }
 
     public List<CorporateCustomerShareholder> getAll() {
