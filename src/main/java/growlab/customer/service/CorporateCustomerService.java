@@ -25,8 +25,4 @@ public interface CorporateCustomerService {
     Integer addShareholder(CreatedShareholder createdShareholder);
 
     void updatedShareholder(Integer shareholderId, UpdatedShareholder updatedShareholder);
-
-    Integer addContactDetail(CreatedContactDetail createdContactDetail);
-
-    void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail);
 }

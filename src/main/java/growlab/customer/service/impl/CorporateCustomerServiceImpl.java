@@ -19,6 +19,7 @@ import growlab.customer.mapper.ShareHolderMapper;
 import growlab.customer.repository.CorporateCustomerShareholderRepository;
 import growlab.customer.repository.CustomerContactDetailRepository;
 import growlab.customer.repository.CustomerRepository;
+import growlab.customer.service.ContactDetailService;
 import growlab.customer.service.CorporateCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
     private final CustomerContactDetailRepository contactDetailRepository;
     private final ShareHolderMapper shareHolderMapper;
     private final CorporateCustomerShareholderRepository corporateCustomerShareholderRepository;
+    private final ContactDetailService contactDetailService;
 
     @Override
     public Integer create(CreatedCorporateCustomer request) {
@@ -45,7 +47,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         Integer corporateCustomerId = customerRepository.create(customer);
 
         for (CreatedContactDetail createdContactDetail : request.getContactDetails()) {
-            addContactDetail(createdContactDetail);
+            contactDetailService.addContactDetail(createdContactDetail);
         }
 
         for (CreatedShareholder createdShareholder : request.getShareholders()) {
@@ -107,18 +109,5 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
                 = corporateCustomerShareholderRepository.getById(shareholderId);
         shareHolderMapper.updateEntity(corporateCustomerShareholder, updatedShareholder);
         corporateCustomerShareholderRepository.update(shareholderId, corporateCustomerShareholder);
-    }
-
-    @Override
-    public Integer addContactDetail(CreatedContactDetail createdContactDetail) {
-        CustomerContactDetail contactDetail = contactDetailMapper.toEntity(createdContactDetail);
-        return contactDetailRepository.create(contactDetail);
-    }
-
-    @Override
-    public void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail) {
-        CustomerContactDetail contactDetail = contactDetailRepository.getById(contactDetailId);
-        contactDetailMapper.updateEntity(contactDetail, updatedContactDetail);
-        contactDetailRepository.update(contactDetailId, contactDetail);
     }
 }
