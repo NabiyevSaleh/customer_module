@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +66,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         IndividualCustomerDetailResponse detailResponse = detailMapper.toResponse(detail);
         List<ContactDetailResponse> contactDetailResponseList = contactDetails.stream()
                 .map(contactDetailMapper::toResponse)
-                .toList();
+                .collect(Collectors.toList());
 
         customerResponse.setIndividualCustomerDetailResponse(detailResponse);
         customerResponse.setContactDetailRespons(contactDetailResponseList);
@@ -78,7 +79,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         List<Customer> customers = customerRepository.getAllByType(CustomerType.INDIVIDUAL);
         return customers.stream()
                 .map(customer -> getById(customer.getId()))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override

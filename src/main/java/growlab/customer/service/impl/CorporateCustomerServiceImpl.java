@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -69,11 +70,11 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         List<ShareHolderResponse> shareHolderResponseList =
                 shareholders.stream()
                         .map(shareHolderMapper::toResponse)
-                        .toList();
+                        .collect(Collectors.toList());
 
         List<ContactDetailResponse> contactDetailResponseList = contactDetails.stream()
                 .map(contactDetailMapper::toResponse)
-                .toList();
+                .collect(Collectors.toList());
 
         customerResponse.setShareHolderResponses(shareHolderResponseList);
         customerResponse.setContactDetailResponses(contactDetailResponseList);
@@ -86,7 +87,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         List<Customer> customers = customerRepository.getAllByType(CustomerType.CORPORATE);
         return customers.stream()
                 .map(customer -> getById(customer.getId()))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override

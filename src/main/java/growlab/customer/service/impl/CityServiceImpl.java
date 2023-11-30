@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class CityServiceImpl implements CityService {
         List<City> cities = cityRepository.getAll();
         return cities.stream()
                 .map(cityMapper::toResponse)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class CountryServiceImpl {
         List<Country> countries = countryRepository.getAll();
         return countries.stream()
                 .map(countryMapper::toResponse)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public void update(Integer id, UpdatedCountry request) {
