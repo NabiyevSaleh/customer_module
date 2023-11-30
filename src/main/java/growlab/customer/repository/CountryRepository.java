@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CountryRepository {
 
+    private static final String NOT_FOUND_MESSAGE = "Country not found";
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<Country> countryRowMapper;
 
@@ -38,7 +39,7 @@ public class CountryRepository {
                             .addValue("id", id),
                     countryRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Country not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
@@ -47,7 +48,7 @@ public class CountryRepository {
         try {
             return jdbc.query(sql, countryRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Country not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
@@ -56,7 +57,8 @@ public class CountryRepository {
         try {
             jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 

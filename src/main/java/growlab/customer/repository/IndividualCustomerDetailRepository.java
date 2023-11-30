@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 public class IndividualCustomerDetailRepository {
 
+    private static final String NOT_FOUND_MESSAGE = "Individual customer detail not found";
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<IndividualCustomerDetail> individualCustomerDetailsRowMapper;
 
@@ -53,7 +54,7 @@ public class IndividualCustomerDetailRepository {
                     individualCustomerDetailsRowMapper);
             return result;
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Data not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
@@ -75,23 +76,27 @@ public class IndividualCustomerDetailRepository {
                 "position = :position" +
                 "WHERE id = :id";
 
-        jdbc.update(sql,
-                new MapSqlParameterSource()
-                        .addValue("id", id)
-                        .addValue("pin", individualCustomerDetail.getPin())
-                        .addValue("customerId", individualCustomerDetail.getCustomerId())
-                        .addValue("uniqueIdName", individualCustomerDetail.getUniqueIdName())
-                        .addValue("uniqueIdValue", individualCustomerDetail.getUniqueIdValue())
-                        .addValue("birthCountryId", individualCustomerDetail.getBirthCountryId())
-                        .addValue("birthCityId", individualCustomerDetail.getBirthCityId())
-                        .addValue("idBeginDate", individualCustomerDetail.getIdBeginDate())
-                        .addValue("idEndDate", individualCustomerDetail.getIdEndDate())
-                        .addValue("image", individualCustomerDetail.getImage())
-                        .addValue("birthDate", individualCustomerDetail.getBirthDate())
-                        .addValue("gender", individualCustomerDetail.getGender())
-                        .addValue("maritalStatus", individualCustomerDetail.getMaritalStatus())
-                        .addValue("workPlace", individualCustomerDetail.getWorkPlace())
-                        .addValue("position", individualCustomerDetail.getPosition()));
+        try {
+            jdbc.update(sql,
+                    new MapSqlParameterSource()
+                            .addValue("id", id)
+                            .addValue("pin", individualCustomerDetail.getPin())
+                            .addValue("customerId", individualCustomerDetail.getCustomerId())
+                            .addValue("uniqueIdName", individualCustomerDetail.getUniqueIdName())
+                            .addValue("uniqueIdValue", individualCustomerDetail.getUniqueIdValue())
+                            .addValue("birthCountryId", individualCustomerDetail.getBirthCountryId())
+                            .addValue("birthCityId", individualCustomerDetail.getBirthCityId())
+                            .addValue("idBeginDate", individualCustomerDetail.getIdBeginDate())
+                            .addValue("idEndDate", individualCustomerDetail.getIdEndDate())
+                            .addValue("image", individualCustomerDetail.getImage())
+                            .addValue("birthDate", individualCustomerDetail.getBirthDate())
+                            .addValue("gender", individualCustomerDetail.getGender())
+                            .addValue("maritalStatus", individualCustomerDetail.getMaritalStatus())
+                            .addValue("workPlace", individualCustomerDetail.getWorkPlace())
+                            .addValue("position", individualCustomerDetail.getPosition()));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
     }
 
     public void delete(Integer id) {
@@ -100,7 +105,7 @@ public class IndividualCustomerDetailRepository {
             jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
         } catch (EmptyResultDataAccessException e) {
-            log.error("Individual customer details not found with id: {}", id);
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 }

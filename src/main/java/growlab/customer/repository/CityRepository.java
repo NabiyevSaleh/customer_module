@@ -17,15 +17,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CityRepository {
 
+    private static final String NOT_FOUND_MESSAGE = "City not found";
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<City> cityRowMapper;
 
-    public Integer create(City city) {
+    public Integer create(Integer countryId, City city) {
         String sql = "INSERT INTO cities (country_id, name) VALUES (:countryId, :name)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("countryId", city.getCountryId())
+                        .addValue("countryId", countryId)
                         .addValue("name", city.getName()),
                 keyHolder);
         return keyHolder.getKey().intValue();
@@ -39,7 +40,7 @@ public class CityRepository {
                             .addValue("id", id),
                     cityRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("City not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
@@ -48,8 +49,12 @@ public class CityRepository {
         try {
             return jdbc.query(sql, cityRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("City not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
+    }
+
+    public void update() {
+
     }
 
     public void delete(Integer id) {
@@ -58,7 +63,7 @@ public class CityRepository {
             jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("City not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 

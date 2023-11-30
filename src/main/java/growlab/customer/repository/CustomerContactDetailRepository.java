@@ -3,6 +3,7 @@ package growlab.customer.repository;
 import growlab.customer.domain.CustomerContactDetail;
 import growlab.customer.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerContactDetailRepository {
 
+    private static final String NOT_FOUND_MESSAGE = "Contact detail not found";
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<CustomerContactDetail> customerContactDetailRowMapper;
 
@@ -39,27 +41,35 @@ public class CustomerContactDetailRepository {
                     new MapSqlParameterSource()
                             .addValue("id", id),
                     customerContactDetailRowMapper);
-        } catch (Exception e) {
-            throw new NotFoundException("Shareholder not found");
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
     public List<CustomerContactDetail> getAllByCustomerId(Integer customerId) {
         String sql = "SELECT * FROM customer_contact_details WHERE customerId = :customerId";
-        return jdbc.query(sql,
-                new MapSqlParameterSource()
-                        .addValue("customerId", customerId),
-                customerContactDetailRowMapper);
+        try {
+            return jdbc.query(sql,
+                    new MapSqlParameterSource()
+                            .addValue("customerId", customerId),
+                    customerContactDetailRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
     }
 
     public void update(Integer id, CustomerContactDetail request) {
         String sql = "UPDATE customer_contact_details SET contact_type = :contactType, contact_value = :contactValue, is_active = :isActive WHERE id = :id";
-        jdbc.update(sql,
-                new MapSqlParameterSource()
-                        .addValue("contactType", request.getContactType())
-                        .addValue("contactValue", request.getContactValue())
-                        .addValue("isActive", request.getIsActive())
-                        .addValue("id", id));
+        try {
+            jdbc.update(sql,
+                    new MapSqlParameterSource()
+                            .addValue("contactType", request.getContactType())
+                            .addValue("contactValue", request.getContactValue())
+                            .addValue("isActive", request.getIsActive())
+                            .addValue("id", id));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
     }
 
     public void delete(Integer id) {
@@ -67,7 +77,8 @@ public class CustomerContactDetailRepository {
         try {
             jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 }

@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CorporateCustomerShareholderRepository {
 
+    private static final String NOT_FOUND_MESSAGE = "Shareholder not found";
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<CorporateCustomerShareholder> corporateCustomerShareholderRowMapper;
 
@@ -40,7 +41,7 @@ public class CorporateCustomerShareholderRepository {
                             .addValue("id", id),
                     corporateCustomerShareholderRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Shareholder not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
@@ -53,7 +54,7 @@ public class CorporateCustomerShareholderRepository {
                     corporateCustomerShareholderRowMapper);
             return result;
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Shareholder not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
@@ -62,17 +63,21 @@ public class CorporateCustomerShareholderRepository {
         try {
             return jdbc.query(sql, corporateCustomerShareholderRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Shareholder not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
     public void update(Integer id, CorporateCustomerShareholder shareholder) {
         String sql = "UPDATE corporate_customer_shareholder SET shareholder = :shareholder, share_percent = :sharePercent WHERE id = :id";
-        jdbc.update(sql,
-                new MapSqlParameterSource()
-                        .addValue("shareholder", shareholder.getShareholder())
-                        .addValue("sharePercent", shareholder.getSharePercent())
-                        .addValue("id", id));
+        try {
+            jdbc.update(sql,
+                    new MapSqlParameterSource()
+                            .addValue("shareholder", shareholder.getShareholder())
+                            .addValue("sharePercent", shareholder.getSharePercent())
+                            .addValue("id", id));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
     }
 
     public void delete(Integer id) {
@@ -81,7 +86,7 @@ public class CorporateCustomerShareholderRepository {
             jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Shareholder not found");
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 

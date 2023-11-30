@@ -36,11 +36,6 @@ public class CountryServiceImpl {
                 .collect(Collectors.toList());
     }
 
-    public void update(Integer id, UpdatedCountry request) {
-        Country country = countryRepository.getById(id);
-        countryMapper.updateEntity(country, request);
-    }
-
     public void delete(Integer id) {
         countryRepository.delete(id);
     }

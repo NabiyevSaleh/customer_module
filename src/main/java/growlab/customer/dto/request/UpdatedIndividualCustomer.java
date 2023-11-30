@@ -22,4 +22,5 @@ public class UpdatedIndividualCustomer {
     private Integer status;
     private String customerCategory;
     private UpdatedIndividualCustomerDetail detail;
+
 }

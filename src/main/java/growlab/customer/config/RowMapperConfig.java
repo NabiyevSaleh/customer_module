@@ -2,6 +2,7 @@ package growlab.customer.config;
 
 import growlab.customer.domain.*;
 import growlab.customer.enums.ContactType;
+import growlab.customer.enums.CustomerCategory;
 import growlab.customer.enums.CustomerType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,7 +54,7 @@ public class RowMapperConfig {
                 .authBy(rs.getInt("auth_by"))
                 .authAt(rs.getTimestamp("auth_at").toLocalDateTime())
                 .status(rs.getInt("status"))
-                .customerCategory(rs.getString("customer_category"))
+                .customerCategory(CustomerCategory.valueOf(rs.getString("customer_category")))
                 .build();
     }
 

@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 public class CreatedIndividualCustomer {
 
-    private Integer internalId;
     private String name;
     private String surname;
     private String middleName;
@@ -24,11 +23,9 @@ public class CreatedIndividualCustomer {
     private String residentialAddress4;
     private String authority;
     private String voen;
-    private Integer createdBy;
-    private Integer authBy;
-    private LocalDateTime authAt;
     private Integer status;
     private String customerCategory;
     private CreatedIndividualCustomerDetail detail;
     private List<CreatedContactDetail> contactDetails;
+
 }

@@ -10,13 +10,11 @@ import java.util.List;
 @Service
 public interface CityService {
 
-    public Integer create(CreatedCity request);
+    public Integer create(Integer countryId, CreatedCity request);
 
     public CityResponse getById(Integer id);
 
     public List<CityResponse> getAll();
-
-    public void update(Integer id, UpdatedCity request);
 
     public void delete(Integer id);
 }

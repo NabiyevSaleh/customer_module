@@ -16,8 +16,6 @@ public interface CountryService {
 
     public List<CountryResponse> getAll();
 
-    public void update(Integer id, UpdatedCountry request);
-
     public void delete(Integer id);
 
 }

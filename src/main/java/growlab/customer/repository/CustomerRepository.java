@@ -2,7 +2,9 @@ package growlab.customer.repository;
 
 import growlab.customer.domain.Customer;
 import growlab.customer.enums.CustomerType;
+import growlab.customer.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerRepository {
 
+    private static final String NOT_FOUND_MESSAGE = "Customer not found";
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<Customer> customerRowMapper;
 
@@ -25,7 +28,7 @@ public class CustomerRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("internalId", customer.getInternalId())
+                        .addValue("internalId", getInternalId())
                         .addValue("name", customer.getName())
                         .addValue("surname", customer.getSurname())
                         .addValue("middleName", customer.getMiddleName())
@@ -55,48 +58,65 @@ public class CustomerRepository {
 
     public Customer getById(Integer id) {
         String sql = "SELECT * FROM customers WHERE id = :id";
-        return jdbc.queryForObject(sql,
-                new MapSqlParameterSource()
-                        .addValue("id", id),
-                customerRowMapper);
+        try {
+            return jdbc.queryForObject(sql,
+                    new MapSqlParameterSource()
+                            .addValue("id", id),
+                    customerRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
     }
 
     public List<Customer> getAll() {
         String sql = "SELECT * FROM customers";
-        return jdbc.query(sql, customerRowMapper);
+        try {
+            return jdbc.query(sql, customerRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
     }
 
     public List<Customer> getAllByType(CustomerType type) {
         String sql = "SELECT * FROM customers WHERE customer_type = :customerType";
-        return jdbc.query(sql,
-                new MapSqlParameterSource()
-                        .addValue("customerType", type.toString()),
-                customerRowMapper);
+        try {
+            return jdbc.query(sql,
+                    new MapSqlParameterSource()
+                            .addValue("customerType", type.toString()),
+                    customerRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
     }
 
     public void update(Integer id, Customer customer) {
         String sql = "UPDATE customers SET name = :name, surname = :surname, middlename = :middleName, legal_country_id =:legalCountryId, legal_city_id = :legalCityId, registration_address1 = :registrationAddress1, registration_address2 = :registrationAddress2, registration_address3 = :registrationAddress3, registration_address4 = :registrationAddress4, residential_address1 = :residentialAddress1, residential_address2 = :residentialAddress2, residential_address3 = :residentialAddress3, residential_address4 = :residentialAddress4, authority = :authority, voen = :voen, customer_type = :customerType, registration_date = :registrationDate, created_by = :createdBy, created_at = :createdAt, auth_by = :authBy, auth_at = :authAt, status = :status, customer_category = :customerCategory WHERE id = :id";
-        jdbc.update(sql,
-                new MapSqlParameterSource()
-                        .addValue("name", customer.getName())
-                        .addValue("surname", customer.getSurname())
-                        .addValue("middleName", customer.getMiddleName())
-                        .addValue("legalCountryId", customer.getLegalCountryId())
-                        .addValue("legalCityId", customer.getLegalCityId())
-                        .addValue("registrationAddress1", customer.getRegistrationAddress1())
-                        .addValue("registrationAddress2", customer.getRegistrationAddress2())
-                        .addValue("registrationAddress3", customer.getRegistrationAddress3())
-                        .addValue("registrationAddress4", customer.getRegistrationAddress4())
-                        .addValue("residentialAddress1", customer.getResidentialAddress1())
-                        .addValue("residentialAddress2", customer.getResidentialAddress2())
-                        .addValue("residentialAddress3", customer.getResidentialAddress3())
-                        .addValue("residentialAddress4", customer.getResidentialAddress4())
-                        .addValue("authority", customer.getAuthority())
-                        .addValue("voen", customer.getVoen())
-                        .addValue("registrationDate", customer.getRegistrationDate())
-                        .addValue("status", customer.getStatus())
-                        .addValue("customerCategory", customer.getCustomerCategory())
-                        .addValue("id", id));
+        try {
+            jdbc.update(sql,
+                    new MapSqlParameterSource()
+                            .addValue("name", customer.getName())
+                            .addValue("surname", customer.getSurname())
+                            .addValue("middleName", customer.getMiddleName())
+                            .addValue("legalCountryId", customer.getLegalCountryId())
+                            .addValue("legalCityId", customer.getLegalCityId())
+                            .addValue("registrationAddress1", customer.getRegistrationAddress1())
+                            .addValue("registrationAddress2", customer.getRegistrationAddress2())
+                            .addValue("registrationAddress3", customer.getRegistrationAddress3())
+                            .addValue("registrationAddress4", customer.getRegistrationAddress4())
+                            .addValue("residentialAddress1", customer.getResidentialAddress1())
+                            .addValue("residentialAddress2", customer.getResidentialAddress2())
+                            .addValue("residentialAddress3", customer.getResidentialAddress3())
+                            .addValue("residentialAddress4", customer.getResidentialAddress4())
+                            .addValue("authority", customer.getAuthority())
+                            .addValue("voen", customer.getVoen())
+                            .addValue("registrationDate", customer.getRegistrationDate())
+                            .addValue("status", customer.getStatus())
+                            .addValue("customerCategory", customer.getCustomerCategory())
+                            .addValue("id", id));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
+
     }
 
     public void delete(Integer id) {
@@ -104,7 +124,18 @@ public class CustomerRepository {
         try {
             jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
+
+    private String getInternalId(){
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < 9; i++) {
+            int randomNumber = (int) (Math.random() * 10);
+            result.append(randomNumber);
+        }
+        return result.toString();
+    }
+
 }

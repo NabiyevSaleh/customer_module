@@ -1,5 +1,6 @@
 package growlab.customer.domain;
 
+import growlab.customer.enums.CustomerCategory;
 import growlab.customer.enums.CustomerType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +40,6 @@ public class Customer {
     private Integer authBy;
     private LocalDateTime authAt;
     private Integer status;
-    private String customerCategory;
+    private CustomerCategory customerCategory;
 
 }

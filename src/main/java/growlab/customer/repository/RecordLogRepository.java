@@ -1,7 +1,9 @@
 package growlab.customer.repository;
 
 import growlab.customer.domain.RecordLog;
+import growlab.customer.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecordLogRepository {
 
+    private static final String NOT_FOUND_MESSAGE = "Record log not found";
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<RecordLog> recordLogRowMapper;
 
@@ -34,15 +37,23 @@ public class RecordLogRepository {
 
     public RecordLog getById(Integer id) {
         String sql = "SELECT * FROM record_logs WHERE id = :id";
-        return jdbc.queryForObject(sql,
-                new MapSqlParameterSource()
-                        .addValue("id", id),
-                recordLogRowMapper);
+        try {
+            return jdbc.queryForObject(sql,
+                    new MapSqlParameterSource()
+                            .addValue("id", id),
+                    recordLogRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
     }
 
     public List<RecordLog> getAll() {
         String sql = "SELECT * FROM corporate_customer_details";
-        return jdbc.query(sql, recordLogRowMapper);
+        try {
+            return jdbc.query(sql, recordLogRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
     }
 
 }

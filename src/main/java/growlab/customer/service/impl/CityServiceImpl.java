@@ -2,7 +2,6 @@ package growlab.customer.service.impl;
 
 import growlab.customer.domain.City;
 import growlab.customer.dto.CreatedCity;
-import growlab.customer.dto.UpdatedCity;
 import growlab.customer.dto.response.CityResponse;
 import growlab.customer.mapper.CityMapper;
 import growlab.customer.repository.CityRepository;
@@ -21,9 +20,9 @@ public class CityServiceImpl implements CityService {
     private final CityMapper cityMapper;
 
     @Override
-    public Integer create(CreatedCity request) {
+    public Integer create(Integer countryId, CreatedCity request) {
         City city = cityMapper.toEntity(request);
-        return cityRepository.create(city);
+        return cityRepository.create(countryId, city);
     }
 
     @Override
@@ -38,12 +37,6 @@ public class CityServiceImpl implements CityService {
         return cities.stream()
                 .map(cityMapper::toResponse)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void update(Integer id, UpdatedCity request) {
-        City city = cityRepository.getById(id);
-        cityMapper.updateEntity(city, request);
     }
 
     @Override
