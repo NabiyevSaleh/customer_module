@@ -3,6 +3,7 @@ package growlab.customer.mapper;
 import growlab.customer.domain.Customer;
 import growlab.customer.dto.request.CreatedCorporateCustomer;
 import growlab.customer.dto.request.UpdatedCorporateCustomer;
+import growlab.customer.dto.response.CorporateCustomerResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
@@ -14,6 +15,6 @@ public interface CorporateCustomerMapper {
 
     void updateEntity(@MappingTarget Customer entity, UpdatedCorporateCustomer dto);
 
-//    IndividualCustomerResponse toResponse(Customer entity);
+    CorporateCustomerResponse toResponse(Customer entity);
 
 }
