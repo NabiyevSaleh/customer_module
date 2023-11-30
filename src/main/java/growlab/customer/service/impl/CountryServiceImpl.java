@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CountryService {
+public class CountryServiceImpl {
 
     private final CountryRepository countryRepository;
     private final CountryMapper countryMapper;

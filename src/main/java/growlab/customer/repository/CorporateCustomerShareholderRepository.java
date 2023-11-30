@@ -1,7 +1,6 @@
 package growlab.customer.repository;
 
 import growlab.customer.domain.CorporateCustomerShareholder;
-import growlab.customer.domain.IndividualCustomerDetail;
 import growlab.customer.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -35,10 +34,14 @@ public class CorporateCustomerShareholderRepository {
 
     public CorporateCustomerShareholder getById(Integer id) {
         String sql = "SELECT * FROM corporate_customer_shareholder WHERE id = :id";
-        return jdbc.queryForObject(sql,
-                new MapSqlParameterSource()
-                        .addValue("id", id),
-                corporateCustomerShareholderRowMapper);
+        try {
+            return jdbc.queryForObject(sql,
+                    new MapSqlParameterSource()
+                            .addValue("id", id),
+                    corporateCustomerShareholderRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Shareholder not found");
+        }
     }
 
     public List<CorporateCustomerShareholder> getByCustomerId(Integer customerId) {
@@ -50,13 +53,17 @@ public class CorporateCustomerShareholderRepository {
                     corporateCustomerShareholderRowMapper);
             return result;
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("ShareHolder not found");
+            throw new NotFoundException("Shareholder not found");
         }
     }
 
     public List<CorporateCustomerShareholder> getAll() {
         String sql = "SELECT * FROM corporate_customer_shareholder";
-        return jdbc.query(sql, corporateCustomerShareholderRowMapper);
+        try {
+            return jdbc.query(sql, corporateCustomerShareholderRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Shareholder not found");
+        }
     }
 
     public void update(Integer id, CorporateCustomerShareholder shareholder) {
@@ -73,7 +80,8 @@ public class CorporateCustomerShareholderRepository {
         try {
             jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Shareholder not found");
         }
     }
 

@@ -1,0 +1,23 @@
+package growlab.customer.service;
+
+import growlab.customer.dto.CreatedCountry;
+import growlab.customer.dto.UpdatedCountry;
+import growlab.customer.dto.response.CountryResponse;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface CountryService {
+
+    public Integer create(CreatedCountry request);
+
+    public CountryResponse getById(Integer id);
+
+    public List<CountryResponse> getAll();
+
+    public void update(Integer id, UpdatedCountry request);
+
+    public void delete(Integer id);
+
+}

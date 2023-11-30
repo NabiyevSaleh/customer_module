@@ -42,13 +42,13 @@ public class IndividualCustomerController {
         individualCustomerService.update(id, customer);
     }
 
-    @PostMapping
+    @PostMapping("/contact-detail")
     @ResponseStatus(HttpStatus.CREATED)
     public void addContactDetail(@RequestBody CreatedContactDetail createdContactDetail) {
         contactDetailService.addContactDetail(createdContactDetail);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/contact-detail")
     public void updateContactDetail(@RequestBody UpdatedContactDetail updatedContactDetail, @PathVariable("id") Integer id) {
         contactDetailService.updateContactDetail(id, updatedContactDetail);
     }

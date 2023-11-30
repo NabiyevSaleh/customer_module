@@ -44,24 +44,24 @@ public class CorporateCustomerController {
         corporateCustomerService.update(id, customer);
     }
 
-    @PostMapping
+    @PostMapping("/shareholder")
     @ResponseStatus(HttpStatus.CREATED)
     public void addShareHolder(@RequestBody CreatedShareholder createdShareholder) {
         corporateCustomerService.addShareholder(createdShareholder);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/shareholder")
     public void updateShareholder(@PathVariable("id") Integer id, @RequestBody UpdatedShareholder shareholder) {
         corporateCustomerService.updatedShareholder(id, shareholder);
     }
 
-    @PostMapping
+    @PostMapping("/contact-detail")
     @ResponseStatus(HttpStatus.CREATED)
     public void addContactDetail(@RequestBody CreatedContactDetail createdContactDetail) {
         contactDetailService.addContactDetail(createdContactDetail);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/contact-detail")
     public void updateContactDetail(@RequestBody UpdatedContactDetail updatedContactDetail, @PathVariable("id") Integer id) {
         contactDetailService.updateContactDetail(id, updatedContactDetail);
     }

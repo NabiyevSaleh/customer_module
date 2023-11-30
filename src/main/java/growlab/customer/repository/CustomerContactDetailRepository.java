@@ -1,6 +1,7 @@
 package growlab.customer.repository;
 
 import growlab.customer.domain.CustomerContactDetail;
+import growlab.customer.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -33,10 +34,14 @@ public class CustomerContactDetailRepository {
 
     public CustomerContactDetail getById(Integer id) {
         String sql = "SELECT * FROM customer_contact_details WHERE id = :id";
-        return jdbc.queryForObject(sql,
-                new MapSqlParameterSource()
-                        .addValue("id", id),
-                customerContactDetailRowMapper);
+        try {
+            return jdbc.queryForObject(sql,
+                    new MapSqlParameterSource()
+                            .addValue("id", id),
+                    customerContactDetailRowMapper);
+        } catch (Exception e) {
+            throw new NotFoundException("Shareholder not found");
+        }
     }
 
     public List<CustomerContactDetail> getAllByCustomerId(Integer customerId) {

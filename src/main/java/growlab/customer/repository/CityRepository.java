@@ -1,7 +1,9 @@
 package growlab.customer.repository;
 
 import growlab.customer.domain.City;
+import growlab.customer.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -31,15 +33,23 @@ public class CityRepository {
 
     public City getById(Integer id) {
         String sql = "SELECT * FROM cities WHERE id = :id";
-        return jdbc.queryForObject(sql,
-                new MapSqlParameterSource()
-                        .addValue("id", id),
-                cityRowMapper);
+        try {
+            return jdbc.queryForObject(sql,
+                    new MapSqlParameterSource()
+                            .addValue("id", id),
+                    cityRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("City not found");
+        }
     }
 
     public List<City> getAll() {
         String sql = "SELECT * FROM cities";
-        return jdbc.query(sql, cityRowMapper);
+        try {
+            return jdbc.query(sql, cityRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("City not found");
+        }
     }
 
     public void delete(Integer id) {
@@ -47,7 +57,8 @@ public class CityRepository {
         try {
             jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("City not found");
         }
     }
 

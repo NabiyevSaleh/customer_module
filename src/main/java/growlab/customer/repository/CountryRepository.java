@@ -1,7 +1,9 @@
 package growlab.customer.repository;
 
 import growlab.customer.domain.Country;
+import growlab.customer.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -30,15 +32,23 @@ public class CountryRepository {
 
     public Country getById(Integer id) {
         String sql = "SELECT * FROM countries WHERE id = :id";
-        return jdbc.queryForObject(sql,
-                new MapSqlParameterSource()
-                        .addValue("id", id),
-                countryRowMapper);
+        try {
+            return jdbc.queryForObject(sql,
+                    new MapSqlParameterSource()
+                            .addValue("id", id),
+                    countryRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Country not found");
+        }
     }
 
     public List<Country> getAll() {
         String sql = "SELECT * FROM countries";
-        return jdbc.query(sql, countryRowMapper);
+        try {
+            return jdbc.query(sql, countryRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Country not found");
+        }
     }
 
     public void delete(Integer id) {
