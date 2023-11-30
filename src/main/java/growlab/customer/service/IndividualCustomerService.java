@@ -19,8 +19,4 @@ public interface IndividualCustomerService {
     List<IndividualCustomerResponse> getAll();
 
     void update(Integer id, UpdatedIndividualCustomer updatedIndividualCustomer);
-
-    Integer addContactDetail(CreatedContactDetail createdContactDetail);
-
-    void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail);
 }

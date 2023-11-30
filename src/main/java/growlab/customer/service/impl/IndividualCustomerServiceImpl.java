@@ -17,6 +17,7 @@ import growlab.customer.mapper.IndividualCustomerDetailMapper;
 import growlab.customer.repository.CustomerContactDetailRepository;
 import growlab.customer.repository.CustomerRepository;
 import growlab.customer.repository.IndividualCustomerDetailRepository;
+import growlab.customer.service.ContactDetailService;
 import growlab.customer.service.IndividualCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
     private final IndividualCustomerDetailMapper detailMapper;
     private final CustomerContactDetailRepository contactDetailRepository;
     private final CustomerContactDetailMapper contactDetailMapper;
+    private final ContactDetailService contactDetailService;
 
     @Override
     public Integer create(CreatedIndividualCustomer request) {
@@ -47,7 +49,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         detailRepository.create(individualCustomerId, detail);
 
         for (CreatedContactDetail createdContactDetail : request.getContactDetails()) {
-            addContactDetail(createdContactDetail);
+            contactDetailService.addContactDetail(createdContactDetail);
         }
 
         return individualCustomerId;
@@ -88,19 +90,6 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         IndividualCustomerDetail detail = detailMapper.toEntity(request.getDetail());
         Integer detailId = detailRepository.getByCustomerId(id).getId();
         detailRepository.update(detailId, detail);
-    }
-
-    @Override
-    public Integer addContactDetail(CreatedContactDetail createdContactDetail) {
-        CustomerContactDetail contactDetail = contactDetailMapper.toEntity(createdContactDetail);
-        return contactDetailRepository.create(contactDetail);
-    }
-
-    @Override
-    public void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail) {
-        CustomerContactDetail contactDetail = contactDetailRepository.getById(contactDetailId);
-        contactDetailMapper.updateEntity(contactDetail, updatedContactDetail);
-        contactDetailRepository.update(contactDetailId, contactDetail);
     }
 
 }
