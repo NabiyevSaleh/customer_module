@@ -3,11 +3,11 @@ package growlab.customer.service.impl;
 import growlab.customer.domain.Customer;
 import growlab.customer.domain.CustomerContactDetail;
 import growlab.customer.domain.IndividualCustomerDetail;
-import growlab.customer.dto.CreatedCustomerContactDetail;
-import growlab.customer.dto.UpdatedCustomerContactDetail;
+import growlab.customer.dto.CreatedContactDetail;
+import growlab.customer.dto.UpdatedContactDetail;
 import growlab.customer.dto.request.CreatedIndividualCustomer;
 import growlab.customer.dto.request.UpdatedIndividualCustomer;
-import growlab.customer.dto.response.CustomerContactDetailResponse;
+import growlab.customer.dto.response.ContactDetailResponse;
 import growlab.customer.dto.response.IndividualCustomerDetailResponse;
 import growlab.customer.dto.response.IndividualCustomerResponse;
 import growlab.customer.enums.CustomerType;
@@ -46,7 +46,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         IndividualCustomerDetail detail = detailMapper.toEntity(request.getDetail());
         detailRepository.create(individualCustomerId, detail);
 
-        for (CreatedCustomerContactDetail createdContactDetail : request.getContactDetails()) {
+        for (CreatedContactDetail createdContactDetail : request.getContactDetails()) {
             addContactDetail(createdContactDetail);
         }
 
@@ -61,12 +61,12 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
 
         IndividualCustomerResponse customerResponse = individualCustomerMapper.toResponse(customer);
         IndividualCustomerDetailResponse detailResponse = detailMapper.toResponse(detail);
-        List<CustomerContactDetailResponse> contactDetailResponseList = contactDetails.stream()
+        List<ContactDetailResponse> contactDetailResponseList = contactDetails.stream()
                 .map(contactDetailMapper::toResponse)
                 .toList();
 
         customerResponse.setIndividualCustomerDetailResponse(detailResponse);
-        customerResponse.setCustomerContactDetailResponses(contactDetailResponseList);
+        customerResponse.setContactDetailRespons(contactDetailResponseList);
 
         return customerResponse;
     }
@@ -91,15 +91,15 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
     }
 
     @Override
-    public Integer addContactDetail(CreatedCustomerContactDetail createdContactDetail) {
+    public Integer addContactDetail(CreatedContactDetail createdContactDetail) {
         CustomerContactDetail contactDetail = contactDetailMapper.toEntity(createdContactDetail);
         return contactDetailRepository.create(contactDetail);
     }
 
     @Override
-    public void updateContactDetail(Integer contactDetailId, UpdatedCustomerContactDetail updatedCustomerContactDetail) {
+    public void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail) {
         CustomerContactDetail contactDetail = contactDetailRepository.getById(contactDetailId);
-        contactDetailMapper.updateEntity(contactDetail, updatedCustomerContactDetail);
+        contactDetailMapper.updateEntity(contactDetail, updatedContactDetail);
         contactDetailRepository.update(contactDetailId, contactDetail);
     }
 

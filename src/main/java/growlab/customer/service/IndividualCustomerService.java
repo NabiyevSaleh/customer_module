@@ -1,7 +1,7 @@
 package growlab.customer.service;
 
-import growlab.customer.dto.CreatedCustomerContactDetail;
-import growlab.customer.dto.UpdatedCustomerContactDetail;
+import growlab.customer.dto.CreatedContactDetail;
+import growlab.customer.dto.UpdatedContactDetail;
 import growlab.customer.dto.request.CreatedIndividualCustomer;
 import growlab.customer.dto.request.UpdatedIndividualCustomer;
 import growlab.customer.dto.response.IndividualCustomerResponse;
@@ -20,7 +20,7 @@ public interface IndividualCustomerService {
 
     void update(Integer id, UpdatedIndividualCustomer updatedIndividualCustomer);
 
-    Integer addContactDetail(CreatedCustomerContactDetail createdCustomerContactDetail);
+    Integer addContactDetail(CreatedContactDetail createdContactDetail);
 
-    void updateContactDetail(Integer contactDetailId, UpdatedCustomerContactDetail updatedCustomerContactDetail);
+    void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail);
 }

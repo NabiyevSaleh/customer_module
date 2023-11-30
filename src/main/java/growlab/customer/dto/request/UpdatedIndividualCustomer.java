@@ -1,6 +1,6 @@
 package growlab.customer.dto.request;
 
-import growlab.customer.dto.UpdatedIndividualCustomerDetailDto;
+import growlab.customer.dto.UpdatedIndividualCustomerDetail;
 import lombok.Data;
 
 @Data
@@ -21,5 +21,5 @@ public class UpdatedIndividualCustomer {
     private String voen;
     private Integer status;
     private String customerCategory;
-    private UpdatedIndividualCustomerDetailDto detail;
+    private UpdatedIndividualCustomerDetail detail;
 }

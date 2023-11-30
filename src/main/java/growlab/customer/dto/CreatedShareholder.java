@@ -3,7 +3,7 @@ package growlab.customer.dto;
 import lombok.Data;
 
 @Data
-public class CreatedCorporateCustomerShareholder {
+public class CreatedShareholder {
 
     private Integer customerId;
     private String shareholder;

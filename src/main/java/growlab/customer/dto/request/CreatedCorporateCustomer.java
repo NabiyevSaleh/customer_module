@@ -1,9 +1,9 @@
 package growlab.customer.dto.request;
 
-import growlab.customer.domain.CorporateCustomerDetail;
-import growlab.customer.dto.CreatedCorporateCustomerShareholder;
-import growlab.customer.dto.CreatedCustomerContactDetail;
+import growlab.customer.dto.CreatedContactDetail;
+import growlab.customer.dto.CreatedShareholder;
 import lombok.Data;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,8 +22,7 @@ public class CreatedCorporateCustomer {
     private LocalDate authAt;
     private Integer status;
     private String customerCategory;
-    private CorporateCustomerDetail detail;
-    private List<CreatedCustomerContactDetail> contactDetails;
-    private List<CreatedCorporateCustomerShareholder> shareholders;
+    private List<CreatedContactDetail> contactDetails;
+    private List<CreatedShareholder> shareholders;
 
 }

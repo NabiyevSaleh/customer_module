@@ -1,8 +1,7 @@
 package growlab.customer.dto.request;
 
-import growlab.customer.dto.CreatedCustomerContactDetail;
-import growlab.customer.dto.CreatedIndividualCustomerDetailDto;
-import growlab.customer.dto.UpdatedIndividualCustomerDetailDto;
+import growlab.customer.dto.CreatedContactDetail;
+import growlab.customer.dto.CreatedIndividualCustomerDetail;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -30,6 +29,6 @@ public class CreatedIndividualCustomer {
     private LocalDateTime authAt;
     private Integer status;
     private String customerCategory;
-    private CreatedIndividualCustomerDetailDto detail;
-    private List<CreatedCustomerContactDetail> contactDetails;
+    private CreatedIndividualCustomerDetail detail;
+    private List<CreatedContactDetail> contactDetails;
 }

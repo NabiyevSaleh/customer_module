@@ -4,9 +4,8 @@ import growlab.customer.enums.ContactType;
 import lombok.Data;
 
 @Data
-public class CreatedCustomerContactDetail {
+public class UpdatedContactDetail {
 
-    private Integer customerId;
     private ContactType contactType;
     private String contactValue;
     private Integer isActive;

@@ -1,11 +1,12 @@
 package growlab.customer.service.impl;
 
-import growlab.customer.domain.CorporateCustomerShareholder;
 import growlab.customer.domain.Customer;
-import growlab.customer.domain.CustomerContactDetail;
-import growlab.customer.dto.CreatedCorporateCustomerShareholder;
-import growlab.customer.dto.CreatedCustomerContactDetail;
+import growlab.customer.dto.CreatedShareholder;
+import growlab.customer.dto.CreatedContactDetail;
+import growlab.customer.dto.UpdatedContactDetail;
+import growlab.customer.dto.UpdatedShareholder;
 import growlab.customer.dto.request.CreatedCorporateCustomer;
+import growlab.customer.dto.request.UpdatedCorporateCustomer;
 import growlab.customer.enums.CustomerType;
 import growlab.customer.mapper.CorporateCustomerMapper;
 import growlab.customer.repository.CorporateCustomerShareholderRepository;
@@ -34,6 +35,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         customer.setCreatedAt(LocalDateTime.now());
         Integer corporateCustomerId = customerRepository.create(customer);
 
+
 //        List<CreatedCustomerContactDetail> createdCustomerContactDetails
 //                = createdCorporateCustomer.getCreatedCustomerContactDetails();
 //
@@ -52,5 +54,40 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
 //            corporateCustomerShareholderRepository.create(corporateCustomerShareholder);
 //        }
         return corporateCustomerId;
+    }
+
+//    @Override
+//    public CorporateCustomerResponse getById(Integer id) {
+//        return null;
+//    }
+//
+//    @Override
+//    public List<CorporateCustomerResponse> getAll() {
+//        return null;
+//    }
+
+    @Override
+    public void update(Integer id, UpdatedCorporateCustomer updatedCorporateCustomer) {
+
+    }
+
+    @Override
+    public Integer addShareholder(CreatedShareholder createdShareholder) {
+        return null;
+    }
+
+    @Override
+    public void updatedShareholder(Integer shareholderId, UpdatedShareholder updatedShareholder) {
+
+    }
+
+    @Override
+    public Integer addContactDetail(CreatedContactDetail createdContactDetail) {
+        return null;
+    }
+
+    @Override
+    public void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail) {
+
     }
 }

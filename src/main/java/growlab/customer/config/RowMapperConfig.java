@@ -57,16 +57,6 @@ public class RowMapperConfig {
                 .build();
     }
 
-    @Bean("corporateCustomerDetailRowMapper")
-    public RowMapper<CorporateCustomerDetail> getCorporateCustomerDetailRowMapper() {
-        return (rs, rowNum) -> CorporateCustomerDetail.builder()
-                .id(rs.getInt("id"))
-                .customerId(rs.getInt("customer_id"))
-                .inn(rs.getInt("inn"))
-                .registerTaxAuthority(rs.getString("register_tax_authority"))
-                .build();
-    }
-
     @Bean("corporateCustomerShareholderRowMapper")
     public RowMapper<CorporateCustomerShareholder> getCorporateCustomerShareholderRowMapper() {
         return (rs, rowNum) -> CorporateCustomerShareholder.builder()

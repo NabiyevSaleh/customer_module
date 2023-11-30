@@ -1,9 +1,9 @@
 package growlab.customer.mapper;
 
 import growlab.customer.domain.CustomerContactDetail;
-import growlab.customer.dto.CreatedCustomerContactDetail;
-import growlab.customer.dto.UpdatedCustomerContactDetail;
-import growlab.customer.dto.response.CustomerContactDetailResponse;
+import growlab.customer.dto.CreatedContactDetail;
+import growlab.customer.dto.UpdatedContactDetail;
+import growlab.customer.dto.response.ContactDetailResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
@@ -11,9 +11,9 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CustomerContactDetailMapper {
 
-    CustomerContactDetail toEntity(CreatedCustomerContactDetail dto);
+    CustomerContactDetail toEntity(CreatedContactDetail dto);
 
-    void updateEntity(@MappingTarget CustomerContactDetail entity, UpdatedCustomerContactDetail dto);
+    void updateEntity(@MappingTarget CustomerContactDetail entity, UpdatedContactDetail dto);
 
-    CustomerContactDetailResponse toResponse(CustomerContactDetail entity);
+    ContactDetailResponse toResponse(CustomerContactDetail entity);
 }
