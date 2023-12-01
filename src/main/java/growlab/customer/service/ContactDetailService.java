@@ -6,6 +6,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ContactDetailService {
+
     Integer addContactDetail(CreatedContactDetail createdContactDetail);
+
     void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail);
+
+    void deleteAllByCustomerId(Integer id);
+
 }

@@ -25,4 +25,6 @@ public interface CorporateCustomerService {
     Integer addShareholder(CreatedShareholder createdShareholder);
 
     void updatedShareholder(Integer shareholderId, UpdatedShareholder updatedShareholder);
+
+
 }

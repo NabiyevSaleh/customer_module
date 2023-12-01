@@ -44,4 +44,9 @@ public class CityServiceImpl implements CityService {
         cityRepository.delete(id);
     }
 
+    @Override
+    public void deleteAllByCountryId(Integer countryId) {
+        cityRepository.deleteAllByCountryId(countryId);
+    }
+
 }

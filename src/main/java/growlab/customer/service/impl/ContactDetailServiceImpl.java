@@ -29,4 +29,10 @@ public class ContactDetailServiceImpl implements ContactDetailService {
         contactDetailMapper.updateEntity(contactDetail, updatedContactDetail);
         contactDetailRepository.update(contactDetailId, contactDetail);
     }
+
+    @Override
+    public void deleteAllByCustomerId(Integer customerId) {
+        contactDetailRepository.deleteAllByCustomerId(customerId);
+    }
+
 }

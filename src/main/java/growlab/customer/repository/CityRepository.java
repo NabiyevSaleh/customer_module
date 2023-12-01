@@ -67,4 +67,14 @@ public class CityRepository {
         }
     }
 
+    public void deleteAllByCountryId(Integer countryId) {
+        String sql = "DELETE FROM cities WHERE country_id = :countryId";
+        try {
+            jdbc.update(sql, new MapSqlParameterSource()
+                    .addValue("countryId", countryId));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
+    }
+
 }

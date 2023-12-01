@@ -81,4 +81,14 @@ public class CustomerContactDetailRepository {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
+
+    public void deleteAllByCustomerId(Integer customerId) {
+        String sql = "DELETE FROM customer_contact_details WHERE customer_id = :customerId";
+        try {
+            jdbc.update(sql, new MapSqlParameterSource()
+                    .addValue("customerId", customerId));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
+    }
 }
