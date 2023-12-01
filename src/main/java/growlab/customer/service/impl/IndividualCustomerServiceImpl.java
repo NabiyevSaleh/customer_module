@@ -69,7 +69,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
                 .collect(Collectors.toList());
 
         customerResponse.setIndividualCustomerDetailResponse(detailResponse);
-        customerResponse.setContactDetailRespons(contactDetailResponseList);
+        customerResponse.setContactDetailResponses(contactDetailResponseList);
 
         return customerResponse;
     }

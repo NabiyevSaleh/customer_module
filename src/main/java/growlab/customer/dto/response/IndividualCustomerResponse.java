@@ -29,6 +29,6 @@ public class IndividualCustomerResponse {
     private Integer status;
     private String customerCategory;
     private IndividualCustomerDetailResponse individualCustomerDetailResponse;
-    private List<ContactDetailResponse> contactDetailRespons;
+    private List<ContactDetailResponse> contactDetailResponses;
 
 }

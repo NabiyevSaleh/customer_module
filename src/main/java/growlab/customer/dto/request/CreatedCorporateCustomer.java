@@ -2,11 +2,10 @@ package growlab.customer.dto.request;
 
 import growlab.customer.dto.CreatedContactDetail;
 import growlab.customer.dto.CreatedShareholder;
+import growlab.customer.enums.CustomerCategory;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,10 +23,14 @@ public class CreatedCorporateCustomer {
     private Integer createdBy;
     private Integer authBy;
     private LocalDate authAt;
+
+    @Min(0)
+    @Max(2)
+    @NotNull
     private Integer status;
 
     @NotBlank(message = "Should not be empty")
-    private String customerCategory;
+    private CustomerCategory customerCategory;
     private List<CreatedContactDetail> contactDetails;
     private List<CreatedShareholder> shareholders;
 

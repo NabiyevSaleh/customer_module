@@ -32,10 +32,6 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
 
     private final CustomerRepository customerRepository;
     private final CorporateCustomerMapper customerMapper;
-    private final CustomerContactDetailMapper contactDetailMapper;
-    private final CustomerContactDetailRepository contactDetailRepository;
-    private final ShareHolderMapper shareHolderMapper;
-    private final CorporateCustomerShareholderRepository corporateCustomerShareholderRepository;
     private final ContactDetailService contactDetailService;
     private final ShareHolderService shareHolderService;
 
