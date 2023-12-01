@@ -47,4 +47,14 @@ public class ShareHolderServiceImpl implements ShareHolderService {
 
         return shareHolderResponseList;
     }
+
+    @Override
+    public void delete(Integer id) {
+        shareholderRepository.delete(id);
+    }
+
+    @Override
+    public void deleteAllByCustomerId(Integer customerId) {
+        shareholderRepository.deleteAllByCustomerId(customerId);
+    }
 }

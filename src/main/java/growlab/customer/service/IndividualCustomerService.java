@@ -22,5 +22,7 @@ public interface IndividualCustomerService {
 
     void update(Integer id, UpdatedIndividualCustomer updatedIndividualCustomer);
 
-    IndividualCustomerDetailResponse individualCustomerDetail(Integer customerId);
+    IndividualCustomerDetailResponse getIndividualCustomerDetail(Integer customerId);
+
+    public void delete(Integer id);
 }

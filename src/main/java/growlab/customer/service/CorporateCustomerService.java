@@ -1,9 +1,5 @@
 package growlab.customer.service;
 
-import growlab.customer.dto.CreatedShareholder;
-import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.UpdatedContactDetail;
-import growlab.customer.dto.UpdatedShareholder;
 import growlab.customer.dto.request.CreatedCorporateCustomer;
 import growlab.customer.dto.request.UpdatedCorporateCustomer;
 import growlab.customer.dto.response.CorporateCustomerResponse;
@@ -21,5 +17,7 @@ public interface CorporateCustomerService {
     List<CorporateCustomerResponse> getAll();
 
     void update(Integer id, UpdatedCorporateCustomer updatedCorporateCustomer);
+
+    public void delete(Integer id);
 
 }

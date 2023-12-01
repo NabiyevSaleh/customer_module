@@ -59,7 +59,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
     public IndividualCustomerResponse getById(Integer id) {
         Customer customer = customerRepository.getById(id);
 
-        IndividualCustomerDetailResponse detailResponse = individualCustomerDetail(customer.getId());
+        IndividualCustomerDetailResponse detailResponse = getIndividualCustomerDetail(customer.getId());
         List<CustomerContactDetail> contactDetails = contactDetailRepository.getAllByCustomerId(id);
 
         IndividualCustomerResponse customerResponse = individualCustomerMapper.toResponse(customer);
@@ -93,12 +93,13 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
     }
 
     @Override
-    public IndividualCustomerDetailResponse individualCustomerDetail(Integer customerId) {
+    public IndividualCustomerDetailResponse getIndividualCustomerDetail(Integer customerId) {
         IndividualCustomerDetail detail = detailRepository.getByCustomerId(customerId);
         IndividualCustomerDetailResponse detailResponse = detailMapper.toResponse(detail);
         return detailResponse;
     }
 
+    @Override
     public void delete(Integer id) {
         detailRepository.deleteByCustomerId(id);
         contactDetailService.deleteAllByCustomerId(id);

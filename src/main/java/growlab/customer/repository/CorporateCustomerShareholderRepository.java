@@ -90,4 +90,13 @@ public class CorporateCustomerShareholderRepository {
         }
     }
 
+    public void deleteAllByCustomerId(Integer customerId) {
+        String sql = "DELETE FROM corporate_customer_shareholder WHERE customer_id = :customerId";
+        try {
+            jdbc.update(sql, new MapSqlParameterSource()
+                    .addValue("customerId", customerId));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
+    }
 }

@@ -15,6 +15,8 @@ public interface ContactDetailService {
     void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail);
     List<ContactDetailResponse> contactDetailResponses (Integer customerId);
 
+    void delete(Integer id);
+
     void deleteAllByCustomerId(Integer id);
 
 }

@@ -67,4 +67,19 @@ public class CorporateCustomerController {
     public void updateContactDetail(@RequestBody UpdatedContactDetail updatedContactDetail, @PathVariable("id") Integer id) {
         contactDetailService.updateContactDetail(id, updatedContactDetail);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable("id") Integer id) {
+        corporateCustomerService.delete(id);
+    }
+
+    @DeleteMapping("/contact-detail/{id}")
+    public void deleteContactDetail(@PathVariable("id") Integer id) {
+        contactDetailService.delete(id);
+    }
+
+    @DeleteMapping("/shareholder/{id}")
+    public void deleteShareholder(@PathVariable("id") Integer id) {
+        shareHolderService.delete(id);
+    }
 }

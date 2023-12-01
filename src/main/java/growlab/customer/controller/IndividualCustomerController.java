@@ -52,4 +52,14 @@ public class IndividualCustomerController {
     public void updateContactDetail(@RequestBody UpdatedContactDetail updatedContactDetail, @PathVariable("id") Integer id) {
         contactDetailService.updateContactDetail(id, updatedContactDetail);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable("id") Integer id) {
+        individualCustomerService.delete(id);
+    }
+
+    @DeleteMapping("/contact-detail/{id}")
+    public void deleteContactDetail(@PathVariable("id") Integer id) {
+        contactDetailService.delete(id);
+    }
 }

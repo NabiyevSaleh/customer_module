@@ -78,4 +78,11 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         customerMapper.updateEntity(customer, request);
         customerRepository.update(id, customer);
     }
+
+    @Override
+    public void delete(Integer id) {
+        contactDetailService.deleteAllByCustomerId(id);
+        shareHolderService.deleteAllByCustomerId(id);
+        customerRepository.delete(id);
+    }
 }

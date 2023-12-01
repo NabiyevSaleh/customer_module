@@ -42,6 +42,12 @@ public class ContactDetailServiceImpl implements ContactDetailService {
                 .collect(Collectors.toList());
         return contactDetailResponseList;
     }
+
+    @Override
+    public void delete(Integer id) {
+        contactDetailRepository.delete(id);
+    }
+
     public void deleteAllByCustomerId(Integer customerId) {
         contactDetailRepository.deleteAllByCustomerId(customerId);
     }

@@ -14,5 +14,9 @@ public interface ShareHolderService {
 
     void updatedShareholder(Integer shareholderId, UpdatedShareholder updatedShareholder);
 
-    List<ShareHolderResponse> shareHolderResponses (Integer customerId);
+    List<ShareHolderResponse> shareHolderResponses(Integer customerId);
+
+    public void delete(Integer id);
+
+    void deleteAllByCustomerId(Integer id);
 }
