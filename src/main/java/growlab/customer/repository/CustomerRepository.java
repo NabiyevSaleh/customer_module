@@ -129,13 +129,25 @@ public class CustomerRepository {
         }
     }
 
-    private String getInternalId(){
+    private String getInternalId() {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < 9; i++) {
             int randomNumber = (int) (Math.random() * 10);
             result.append(randomNumber);
         }
+        checkInternalIdExist(result.toString());
         return result.toString();
     }
 
+    private void checkInternalIdExist(String internalId) {
+        String sql = "select count(*) from customer where internal_id = : internalId";
+
+        int count = jdbc.queryForObject(sql,
+                new MapSqlParameterSource()
+                        .addValue("internalId", internalId),
+                Integer.class);
+        if (count > 0) {
+            getInternalId();
+        }
+    }
 }

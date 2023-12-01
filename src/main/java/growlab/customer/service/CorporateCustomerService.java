@@ -21,8 +21,4 @@ public interface CorporateCustomerService {
     List<CorporateCustomerResponse> getAll();
 
     void update(Integer id, UpdatedCorporateCustomer updatedCorporateCustomer);
-
-    Integer addShareholder(CreatedShareholder createdShareholder);
-
-    void updatedShareholder(Integer shareholderId, UpdatedShareholder updatedShareholder);
 }

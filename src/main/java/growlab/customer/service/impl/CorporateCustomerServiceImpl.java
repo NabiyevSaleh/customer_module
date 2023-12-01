@@ -1,26 +1,24 @@
 package growlab.customer.service.impl;
 
-import growlab.customer.domain.CorporateCustomerShareholder;
 import growlab.customer.domain.Customer;
 import growlab.customer.domain.CustomerContactDetail;
-import growlab.customer.domain.IndividualCustomerDetail;
-import growlab.customer.dto.CreatedShareholder;
 import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.UpdatedContactDetail;
-import growlab.customer.dto.UpdatedShareholder;
+import growlab.customer.dto.CreatedShareholder;
 import growlab.customer.dto.request.CreatedCorporateCustomer;
 import growlab.customer.dto.request.UpdatedCorporateCustomer;
-import growlab.customer.dto.response.*;
+import growlab.customer.dto.response.ContactDetailResponse;
+import growlab.customer.dto.response.CorporateCustomerResponse;
+import growlab.customer.dto.response.ShareHolderResponse;
 import growlab.customer.enums.CustomerType;
 import growlab.customer.mapper.CorporateCustomerMapper;
 import growlab.customer.mapper.CustomerContactDetailMapper;
-import growlab.customer.mapper.IndividualCustomerDetailMapper;
 import growlab.customer.mapper.ShareHolderMapper;
 import growlab.customer.repository.CorporateCustomerShareholderRepository;
 import growlab.customer.repository.CustomerContactDetailRepository;
 import growlab.customer.repository.CustomerRepository;
 import growlab.customer.service.ContactDetailService;
 import growlab.customer.service.CorporateCustomerService;
+import growlab.customer.service.ShareHolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +37,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
     private final ShareHolderMapper shareHolderMapper;
     private final CorporateCustomerShareholderRepository corporateCustomerShareholderRepository;
     private final ContactDetailService contactDetailService;
+    private final ShareHolderService shareHolderService;
 
     @Override
     public Integer create(CreatedCorporateCustomer request) {
@@ -52,7 +51,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         }
 
         for (CreatedShareholder createdShareholder : request.getShareholders()) {
-            addShareholder(createdShareholder);
+            shareHolderService.addShareholder(createdShareholder);
         }
 
         return corporateCustomerId;
@@ -60,21 +59,12 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
 
     @Override
     public CorporateCustomerResponse getById(Integer id) {
-        Customer customer = customerRepository.getById(id);
-        List<CorporateCustomerShareholder> shareholders
-                = corporateCustomerShareholderRepository.getByCustomerId(id);
-        List<CustomerContactDetail> contactDetails = contactDetailRepository.getAllByCustomerId(id);
 
+        Customer customer = customerRepository.getById(id);
         CorporateCustomerResponse customerResponse = customerMapper.toResponse(customer);
 
-        List<ShareHolderResponse> shareHolderResponseList =
-                shareholders.stream()
-                        .map(shareHolderMapper::toResponse)
-                        .collect(Collectors.toList());
-
-        List<ContactDetailResponse> contactDetailResponseList = contactDetails.stream()
-                .map(contactDetailMapper::toResponse)
-                .collect(Collectors.toList());
+        List<ShareHolderResponse> shareHolderResponseList = shareHolderService.shareHolderResponses(customer.getId());
+        List<ContactDetailResponse> contactDetailResponseList = contactDetailService.contactDetailResponses(customer.getId());
 
         customerResponse.setShareHolderResponses(shareHolderResponseList);
         customerResponse.setContactDetailResponses(contactDetailResponseList);
@@ -98,17 +88,4 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         customerRepository.update(id, customer);
     }
 
-    @Override
-    public Integer addShareholder(CreatedShareholder createdShareholder) {
-        CorporateCustomerShareholder corporateCustomerShareholder = shareHolderMapper.toEntity(createdShareholder);
-        return corporateCustomerShareholderRepository.create(corporateCustomerShareholder);
-    }
-
-    @Override
-    public void updatedShareholder(Integer shareholderId, UpdatedShareholder updatedShareholder) {
-        CorporateCustomerShareholder corporateCustomerShareholder
-                = corporateCustomerShareholderRepository.getById(shareholderId);
-        shareHolderMapper.updateEntity(corporateCustomerShareholder, updatedShareholder);
-        corporateCustomerShareholderRepository.update(shareholderId, corporateCustomerShareholder);
-    }
 }

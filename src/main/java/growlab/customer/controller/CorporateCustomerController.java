@@ -9,6 +9,7 @@ import growlab.customer.dto.request.UpdatedCorporateCustomer;
 import growlab.customer.dto.response.CorporateCustomerResponse;
 import growlab.customer.service.ContactDetailService;
 import growlab.customer.service.CorporateCustomerService;
+import growlab.customer.service.ShareHolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class CorporateCustomerController {
 
     private final CorporateCustomerService corporateCustomerService;
     private final ContactDetailService contactDetailService;
+    private final ShareHolderService shareHolderService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,12 +49,12 @@ public class CorporateCustomerController {
     @PostMapping("/shareholder")
     @ResponseStatus(HttpStatus.CREATED)
     public void addShareHolder(@RequestBody CreatedShareholder createdShareholder) {
-        corporateCustomerService.addShareholder(createdShareholder);
+        shareHolderService.addShareholder(createdShareholder);
     }
 
     @PutMapping("/{id}/shareholder")
     public void updateShareholder(@PathVariable("id") Integer id, @RequestBody UpdatedShareholder shareholder) {
-        corporateCustomerService.updatedShareholder(id, shareholder);
+        shareHolderService.updatedShareholder(id, shareholder);
     }
 
     @PostMapping("/contact-detail")
