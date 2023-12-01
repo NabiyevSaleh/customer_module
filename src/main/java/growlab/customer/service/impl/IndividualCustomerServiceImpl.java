@@ -49,7 +49,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         detailRepository.create(individualCustomerId, detail);
 
         for (CreatedContactDetail createdContactDetail : request.getContactDetails()) {
-            contactDetailService.addContactDetail(createdContactDetail);
+            contactDetailService.addContactDetail(individualCustomerId, createdContactDetail);
         }
 
         return individualCustomerId;

@@ -57,10 +57,11 @@ public class CorporateCustomerController {
         shareHolderService.updatedShareholder(id, shareholder);
     }
 
-    @PostMapping("/contact-detail")
+    @PostMapping("/{id}/contact-detail")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addContactDetail(@RequestBody CreatedContactDetail createdContactDetail) {
-        contactDetailService.addContactDetail(createdContactDetail);
+    public void addContactDetail(@PathVariable("id") Integer id,
+                                 @RequestBody CreatedContactDetail createdContactDetail) {
+        contactDetailService.addContactDetail(id, createdContactDetail);
     }
 
     @PutMapping("/{id}/contact-detail")

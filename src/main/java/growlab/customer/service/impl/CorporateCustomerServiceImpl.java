@@ -38,7 +38,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         Integer corporateCustomerId = customerRepository.create(customer);
 
         for (CreatedContactDetail createdContactDetail : request.getContactDetails()) {
-            contactDetailService.addContactDetail(createdContactDetail);
+            contactDetailService.addContactDetail(corporateCustomerId, createdContactDetail);
         }
 
         for (CreatedShareholder createdShareholder : request.getShareholders()) {

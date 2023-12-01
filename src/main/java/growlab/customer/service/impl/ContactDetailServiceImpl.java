@@ -22,8 +22,9 @@ public class ContactDetailServiceImpl implements ContactDetailService {
     private final CustomerContactDetailRepository contactDetailRepository;
 
     @Override
-    public Integer addContactDetail(CreatedContactDetail createdContactDetail) {
+    public Integer addContactDetail(Integer customerId, CreatedContactDetail createdContactDetail) {
         CustomerContactDetail contactDetail = contactDetailMapper.toEntity(createdContactDetail);
+        contactDetail.setCustomerId(customerId);
         return contactDetailRepository.create(contactDetail);
     }
 

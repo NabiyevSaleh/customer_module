@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class CreatedContactDetail {
 
-    private Integer customerId;
     private ContactType contactType;
     private String contactValue;
     private Integer isActive;
