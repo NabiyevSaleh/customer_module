@@ -95,8 +95,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
     @Override
     public IndividualCustomerDetailResponse getIndividualCustomerDetail(Integer customerId) {
         IndividualCustomerDetail detail = detailRepository.getByCustomerId(customerId);
-        IndividualCustomerDetailResponse detailResponse = detailMapper.toResponse(detail);
-        return detailResponse;
+        return detailMapper.toResponse(detail);
     }
 
     @Override
