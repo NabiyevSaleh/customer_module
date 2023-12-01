@@ -2,10 +2,10 @@ package growlab.customer.service.impl;
 
 import growlab.customer.domain.Country;
 import growlab.customer.dto.CreatedCountry;
-import growlab.customer.dto.UpdatedCountry;
 import growlab.customer.dto.response.CountryResponse;
 import growlab.customer.mapper.CountryMapper;
 import growlab.customer.repository.CountryRepository;
+import growlab.customer.service.CityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,7 @@ public class CountryServiceImpl {
 
     private final CountryRepository countryRepository;
     private final CountryMapper countryMapper;
+    private final CityService cityService;
 
     public Integer create(CreatedCountry request) {
         Country country = countryMapper.toEntity(request);
@@ -37,6 +38,7 @@ public class CountryServiceImpl {
     }
 
     public void delete(Integer id) {
+        cityService.deleteAllByCountryId(id);
         countryRepository.delete(id);
     }
 

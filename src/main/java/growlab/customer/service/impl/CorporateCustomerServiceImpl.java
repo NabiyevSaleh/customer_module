@@ -1,7 +1,6 @@
 package growlab.customer.service.impl;
 
 import growlab.customer.domain.Customer;
-import growlab.customer.domain.CustomerContactDetail;
 import growlab.customer.dto.CreatedContactDetail;
 import growlab.customer.dto.CreatedShareholder;
 import growlab.customer.dto.request.CreatedCorporateCustomer;
@@ -11,10 +10,6 @@ import growlab.customer.dto.response.CorporateCustomerResponse;
 import growlab.customer.dto.response.ShareHolderResponse;
 import growlab.customer.enums.CustomerType;
 import growlab.customer.mapper.CorporateCustomerMapper;
-import growlab.customer.mapper.CustomerContactDetailMapper;
-import growlab.customer.mapper.ShareHolderMapper;
-import growlab.customer.repository.CorporateCustomerShareholderRepository;
-import growlab.customer.repository.CustomerContactDetailRepository;
 import growlab.customer.repository.CustomerRepository;
 import growlab.customer.service.ContactDetailService;
 import growlab.customer.service.CorporateCustomerService;
@@ -83,5 +78,4 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         customerMapper.updateEntity(customer, request);
         customerRepository.update(id, customer);
     }
-
 }

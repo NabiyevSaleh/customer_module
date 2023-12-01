@@ -4,7 +4,6 @@ import growlab.customer.domain.Customer;
 import growlab.customer.domain.CustomerContactDetail;
 import growlab.customer.domain.IndividualCustomerDetail;
 import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.UpdatedContactDetail;
 import growlab.customer.dto.request.CreatedIndividualCustomer;
 import growlab.customer.dto.request.UpdatedIndividualCustomer;
 import growlab.customer.dto.response.ContactDetailResponse;
@@ -12,8 +11,8 @@ import growlab.customer.dto.response.IndividualCustomerDetailResponse;
 import growlab.customer.dto.response.IndividualCustomerResponse;
 import growlab.customer.enums.CustomerType;
 import growlab.customer.mapper.CustomerContactDetailMapper;
-import growlab.customer.mapper.IndividualCustomerMapper;
 import growlab.customer.mapper.IndividualCustomerDetailMapper;
+import growlab.customer.mapper.IndividualCustomerMapper;
 import growlab.customer.repository.CustomerContactDetailRepository;
 import growlab.customer.repository.CustomerRepository;
 import growlab.customer.repository.IndividualCustomerDetailRepository;
@@ -100,4 +99,10 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         return detailResponse;
     }
 
+    public void delete(Integer id) {
+        detailRepository.deleteByCustomerId(id);
+        contactDetailService.deleteAllByCustomerId(id);
+        customerRepository.delete(id);
+    }
 }
+

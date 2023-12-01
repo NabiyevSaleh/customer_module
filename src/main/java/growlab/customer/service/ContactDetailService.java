@@ -9,7 +9,12 @@ import java.util.List;
 
 @Service
 public interface ContactDetailService {
+
     Integer addContactDetail(CreatedContactDetail createdContactDetail);
+
     void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail);
     List<ContactDetailResponse> contactDetailResponses (Integer customerId);
+
+    void deleteAllByCustomerId(Integer id);
+
 }

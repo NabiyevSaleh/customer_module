@@ -21,4 +21,5 @@ public interface CorporateCustomerService {
     List<CorporateCustomerResponse> getAll();
 
     void update(Integer id, UpdatedCorporateCustomer updatedCorporateCustomer);
+
 }

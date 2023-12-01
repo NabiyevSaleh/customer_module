@@ -42,4 +42,7 @@ public class ContactDetailServiceImpl implements ContactDetailService {
                 .collect(Collectors.toList());
         return contactDetailResponseList;
     }
+    public void deleteAllByCustomerId(Integer customerId) {
+        contactDetailRepository.deleteAllByCustomerId(customerId);
+    }
 }
