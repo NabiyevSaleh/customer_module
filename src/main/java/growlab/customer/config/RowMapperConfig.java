@@ -1,9 +1,7 @@
 package growlab.customer.config;
 
 import growlab.customer.domain.*;
-import growlab.customer.enums.ContactType;
-import growlab.customer.enums.CustomerCategory;
-import growlab.customer.enums.CustomerType;
+import growlab.customer.enums.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,6 +22,11 @@ public class RowMapperConfig {
                 .idBeginDate(rs.getDate("id_begin_date").toLocalDate())
                 .idEndDate(rs.getDate("id_end_date").toLocalDate())
                 .image(rs.getString("image"))
+                .birthdate(rs.getDate("birthdate").toLocalDate())
+                .gender(Gender.valueOf(rs.getString("gender")))
+                .maritalStatus(MaritalStatus.valueOf(rs.getString("marital_status")))
+                .workPlace(rs.getString("work_place"))
+                .position(rs.getString("position"))
                 .build();
     }
 

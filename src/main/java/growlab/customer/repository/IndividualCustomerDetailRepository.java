@@ -22,8 +22,8 @@ public class IndividualCustomerDetailRepository {
     private final RowMapper<IndividualCustomerDetail> individualCustomerDetailsRowMapper;
 
     public Integer create(Integer customerId, IndividualCustomerDetail individualCustomerDetail) {
-        String sql = "INSERT INTO individual_customer_details (pin, customer_id, unique_id_name, unique_id_value, birth_country_id, birth_city_id, id_begin_date, id_end_date, image, birth_date, gender, marital_status, work_place, position) " +
-                "VALUES(:pin, :customerId, :uniqueIdName, :uniqueIdValue, :birthCountryId, :birthCityId, :idBeginDate, :idEndDate, :image, :birthDate, :gender, :maritalStatus, :workPlace, :position)";
+        String sql = "INSERT INTO individual_customer_details (pin, customer_id, unique_id_name, unique_id_value, birth_country_id, birth_city_id, id_begin_date, id_end_date, image, birthdate, gender, marital_status, work_place, position) " +
+                "VALUES(:pin, :customerId, :uniqueIdName, :uniqueIdValue, :birthCountryId, :birthCityId, :idBeginDate, :idEndDate, :image, :birthdate, :gender, :maritalStatus, :workPlace, :position)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
@@ -36,7 +36,7 @@ public class IndividualCustomerDetailRepository {
                         .addValue("idBeginDate", individualCustomerDetail.getIdBeginDate())
                         .addValue("idEndDate", individualCustomerDetail.getIdEndDate())
                         .addValue("image", individualCustomerDetail.getImage())
-                        .addValue("birthDate", individualCustomerDetail.getBirthDate())
+                        .addValue("birthdate", individualCustomerDetail.getBirthdate())
                         .addValue("gender", individualCustomerDetail.getGender())
                         .addValue("maritalStatus", individualCustomerDetail.getMaritalStatus())
                         .addValue("workPlace", individualCustomerDetail.getWorkPlace())
@@ -69,7 +69,7 @@ public class IndividualCustomerDetailRepository {
                 "id_begin_date = :idBeginDate, " +
                 "id_end_date = :idEndDate " +
                 "image = :image" +
-                "birth_date = :birthDate" +
+                "birthdate = :birthdate" +
                 "gender = :gender" +
                 "marital_status = :maritalStatus" +
                 "work_place = :workPlace" +
@@ -89,7 +89,7 @@ public class IndividualCustomerDetailRepository {
                             .addValue("idBeginDate", individualCustomerDetail.getIdBeginDate())
                             .addValue("idEndDate", individualCustomerDetail.getIdEndDate())
                             .addValue("image", individualCustomerDetail.getImage())
-                            .addValue("birthDate", individualCustomerDetail.getBirthDate())
+                            .addValue("birthdate", individualCustomerDetail.getBirthdate())
                             .addValue("gender", individualCustomerDetail.getGender())
                             .addValue("maritalStatus", individualCustomerDetail.getMaritalStatus())
                             .addValue("workPlace", individualCustomerDetail.getWorkPlace())

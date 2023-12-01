@@ -1,5 +1,7 @@
 package growlab.customer.domain;
 
+import growlab.customer.enums.Gender;
+import growlab.customer.enums.MaritalStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,9 +25,9 @@ public class IndividualCustomerDetail {
     private LocalDate idBeginDate;
     private LocalDate idEndDate;
     private String image;
-    private LocalDate birthDate;
-    private String gender;
-    private String maritalStatus;
+    private LocalDate birthdate;
+    private Gender gender;
+    private MaritalStatus maritalStatus;
     private String workPlace;
     private String position;
 

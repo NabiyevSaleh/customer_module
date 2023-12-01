@@ -15,7 +15,7 @@ public class UpdatedIndividualCustomerDetail {
     private LocalDate idBeginDate;
     private LocalDate idEndDate;
     private String image;
-    private LocalDate birthDate;
+    private LocalDate birthdate;
     private String gender;
     private String maritalStatus;
     private String workPlace;
