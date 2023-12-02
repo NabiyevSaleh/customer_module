@@ -37,8 +37,8 @@ public class IndividualCustomerDetailRepository {
                         .addValue("idEndDate", individualCustomerDetail.getIdEndDate())
                         .addValue("image", individualCustomerDetail.getImage())
                         .addValue("birthdate", individualCustomerDetail.getBirthdate())
-                        .addValue("gender", individualCustomerDetail.getGender())
-                        .addValue("maritalStatus", individualCustomerDetail.getMaritalStatus())
+                        .addValue("gender", individualCustomerDetail.getGender().name())
+                        .addValue("maritalStatus", individualCustomerDetail.getMaritalStatus().name())
                         .addValue("workPlace", individualCustomerDetail.getWorkPlace())
                         .addValue("position", individualCustomerDetail.getPosition()),
                 keyHolder);
@@ -67,13 +67,13 @@ public class IndividualCustomerDetailRepository {
                 "birth_country_id = :birthCountryId, " +
                 "birth_city_id = :birthCityId, " +
                 "id_begin_date = :idBeginDate, " +
-                "id_end_date = :idEndDate " +
-                "image = :image" +
-                "birthdate = :birthdate" +
-                "gender = :gender" +
-                "marital_status = :maritalStatus" +
-                "work_place = :workPlace" +
-                "position = :position" +
+                "id_end_date = :idEndDate, " +
+                "image = :image, " +
+                "birthdate = :birthdate, " +
+                "gender = :gender, " +
+                "marital_status = :maritalStatus, " +
+                "work_place = :workPlace, " +
+                "position = :position " +
                 "WHERE id = :id";
 
         try {
@@ -90,8 +90,8 @@ public class IndividualCustomerDetailRepository {
                             .addValue("idEndDate", individualCustomerDetail.getIdEndDate())
                             .addValue("image", individualCustomerDetail.getImage())
                             .addValue("birthdate", individualCustomerDetail.getBirthdate())
-                            .addValue("gender", individualCustomerDetail.getGender())
-                            .addValue("maritalStatus", individualCustomerDetail.getMaritalStatus())
+                            .addValue("gender", individualCustomerDetail.getGender().name())
+                            .addValue("maritalStatus", individualCustomerDetail.getMaritalStatus().name())
                             .addValue("workPlace", individualCustomerDetail.getWorkPlace())
                             .addValue("position", individualCustomerDetail.getPosition()));
         } catch (EmptyResultDataAccessException e) {

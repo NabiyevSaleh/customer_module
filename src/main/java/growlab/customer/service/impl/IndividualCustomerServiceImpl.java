@@ -3,7 +3,7 @@ package growlab.customer.service.impl;
 import growlab.customer.domain.Customer;
 import growlab.customer.domain.CustomerContactDetail;
 import growlab.customer.domain.IndividualCustomerDetail;
-import growlab.customer.dto.CreatedContactDetail;
+import growlab.customer.dto.request.CreatedContactDetail;
 import growlab.customer.dto.request.CreatedIndividualCustomer;
 import growlab.customer.dto.request.UpdatedIndividualCustomer;
 import growlab.customer.dto.response.ContactDetailResponse;
@@ -42,10 +42,10 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
 
         Customer customer = individualCustomerMapper.toEntity(request);
         customer.setCustomerType(CustomerType.INDIVIDUAL);
-        customer.setCreatedAt(LocalDateTime.now());
         Integer individualCustomerId = customerRepository.create(customer);
 
         IndividualCustomerDetail detail = detailMapper.toEntity(request.getDetail());
+        detail.setCustomerId(individualCustomerId);
         detailRepository.create(individualCustomerId, detail);
 
         for (CreatedContactDetail createdContactDetail : request.getContactDetails()) {
@@ -57,9 +57,9 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
 
     @Override
     public IndividualCustomerResponse getById(Integer id) {
-        Customer customer = customerRepository.getById(id);
+        Customer customer = customerRepository.getIndividualCustomerById(id);
 
-        IndividualCustomerDetailResponse detailResponse = getIndividualCustomerDetail(customer.getId());
+        IndividualCustomerDetailResponse detailResponse = getIndividualCustomerDetail(id);
         List<CustomerContactDetail> contactDetails = contactDetailRepository.getAllByCustomerId(id);
 
         IndividualCustomerResponse customerResponse = individualCustomerMapper.toResponse(customer);
@@ -83,7 +83,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
 
     @Override
     public void update(Integer id, UpdatedIndividualCustomer request) {
-        Customer customer = customerRepository.getById(id);
+        Customer customer = customerRepository.getIndividualCustomerById(id);
         individualCustomerMapper.updateEntity(customer, request);
         customerRepository.update(id, customer);
 

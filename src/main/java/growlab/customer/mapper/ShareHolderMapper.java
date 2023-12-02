@@ -1,11 +1,8 @@
 package growlab.customer.mapper;
 
 import growlab.customer.domain.CorporateCustomerShareholder;
-import growlab.customer.domain.Customer;
-import growlab.customer.dto.CreatedShareholder;
-import growlab.customer.dto.UpdatedShareholder;
-import growlab.customer.dto.request.UpdatedIndividualCustomer;
-import growlab.customer.dto.response.IndividualCustomerResponse;
+import growlab.customer.dto.request.CreatedShareholder;
+import growlab.customer.dto.request.UpdatedShareholder;
 import growlab.customer.dto.response.ShareHolderResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

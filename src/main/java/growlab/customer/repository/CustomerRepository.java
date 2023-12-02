@@ -23,8 +23,8 @@ public class CustomerRepository {
     private final RowMapper<Customer> customerRowMapper;
 
     public Integer create(Customer customer) {
-        String sql = "INSERT INTO customers (internal_id, name, surname, middlename, registration_address1, registration_address2, registration_address3, registration_address4, residential_address1, residential_address2, residential_address3, residential_address4, authority, voen, customer_type, registration_date, created_by, created_at, auth_by, auth_at, status, customer_category) " +
-                "VALUES(:internalId, :name, :surname, :middleName, :registrationAddress1, :registrationAddress2, :registrationAddress3, :registrationAddress4, :residentialAddress1, :residentialAddress2, :residentialAddress3, :residentialAddress4, :authority, :voen, :customerType, :registrationDate, :createdBy, :createdAt, :authBy, :authAt, :status, :customerCategory)";
+        String sql = "INSERT INTO customers (internal_id, name, surname, middlename, legal_country_id, legal_city_id, registration_address1, registration_address2, registration_address3, registration_address4, residential_address1, residential_address2, residential_address3, residential_address4, authority, voen, customer_type, registration_date, created_by, created_at, auth_by, auth_at, status, customer_category) " +
+                "VALUES(:internalId, :name, :surname, :middleName, :legalCountryId, :legalCityId :registrationAddress1, :registrationAddress2, :registrationAddress3, :registrationAddress4, :residentialAddress1, :residentialAddress2, :residentialAddress3, :residentialAddress4, :authority, :voen, :customerType, :registrationDate, :createdBy, :createdAt, :authBy, :authAt, :status, :customerCategory)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
@@ -44,24 +44,38 @@ public class CustomerRepository {
                         .addValue("residentialAddress4", customer.getResidentialAddress4())
                         .addValue("authority", customer.getAuthority())
                         .addValue("voen", customer.getVoen())
-                        .addValue("customerType", customer.getCustomerType())
+                        .addValue("customerType", customer.getCustomerType().name())
                         .addValue("registrationDate", customer.getRegistrationDate())
                         .addValue("createdBy", customer.getCreatedBy())
                         .addValue("createdAt", customer.getCreatedAt())
                         .addValue("authBy", customer.getAuthBy())
                         .addValue("authAt", customer.getAuthAt())
                         .addValue("status", customer.getStatus())
-                        .addValue("customerCategory", customer.getCustomerCategory()),
+                        .addValue("customerCategory", customer.getCustomerCategory().name()),
                 keyHolder);
         return keyHolder.getKey().intValue();
     }
 
-    public Customer getById(Integer id) {
-        String sql = "SELECT * FROM customers WHERE id = :id";
+    public Customer getIndividualCustomerById(Integer id) {
+        String sql = "SELECT * FROM customers WHERE id = :id AND customer_type = :type";
         try {
             return jdbc.queryForObject(sql,
                     new MapSqlParameterSource()
-                            .addValue("id", id),
+                            .addValue("id", id)
+                            .addValue("type", CustomerType.INDIVIDUAL.toString()),
+                    customerRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(NOT_FOUND_MESSAGE);
+        }
+    }
+
+    public Customer getCorporateCustomerById(Integer id) {
+        String sql = "SELECT * FROM customers WHERE id = :id AND customer_type = :type";
+        try {
+            return jdbc.queryForObject(sql,
+                    new MapSqlParameterSource()
+                            .addValue("id", id)
+                            .addValue("type", CustomerType.CORPORATE.toString()),
                     customerRowMapper);
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
@@ -110,7 +124,7 @@ public class CustomerRepository {
                             .addValue("authority", customer.getAuthority())
                             .addValue("voen", customer.getVoen())
                             .addValue("status", customer.getStatus())
-                            .addValue("customerCategory", customer.getCustomerCategory())
+                            .addValue("customerCategory", customer.getCustomerCategory().name())
                             .addValue("id", id));
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);

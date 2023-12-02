@@ -27,7 +27,7 @@ public class CustomerContactDetailRepository {
         jdbc.update(sql,
                 new MapSqlParameterSource()
                         .addValue("customerId", contactDetails.getCustomerId())
-                        .addValue("contactType", contactDetails.getContactType())
+                        .addValue("contactType", contactDetails.getContactType().toString())
                         .addValue("contactValue", contactDetails.getContactValue())
                         .addValue("isActive", contactDetails.getIsActive()),
                 keyHolder);
@@ -47,7 +47,7 @@ public class CustomerContactDetailRepository {
     }
 
     public List<CustomerContactDetail> getAllByCustomerId(Integer customerId) {
-        String sql = "SELECT * FROM customer_contact_details WHERE customerId = :customerId";
+        String sql = "SELECT * FROM customer_contact_details WHERE customer_id = :customerId";
         try {
             return jdbc.query(sql,
                     new MapSqlParameterSource()
@@ -63,7 +63,7 @@ public class CustomerContactDetailRepository {
         try {
             jdbc.update(sql,
                     new MapSqlParameterSource()
-                            .addValue("contactType", request.getContactType())
+                            .addValue("contactType", request.getContactType().toString())
                             .addValue("contactValue", request.getContactValue())
                             .addValue("isActive", request.getIsActive())
                             .addValue("id", id));

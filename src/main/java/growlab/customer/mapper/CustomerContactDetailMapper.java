@@ -1,8 +1,8 @@
 package growlab.customer.mapper;
 
 import growlab.customer.domain.CustomerContactDetail;
-import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.UpdatedContactDetail;
+import growlab.customer.dto.request.CreatedContactDetail;
+import growlab.customer.dto.request.UpdatedContactDetail;
 import growlab.customer.dto.response.ContactDetailResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

@@ -1,23 +1,18 @@
 package growlab.customer.service.impl;
 
 import growlab.customer.domain.Customer;
-import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.CreatedShareholder;
+import growlab.customer.dto.request.CreatedContactDetail;
 import growlab.customer.dto.request.CreatedCorporateCustomer;
+import growlab.customer.dto.request.CreatedShareholder;
 import growlab.customer.dto.request.UpdatedCorporateCustomer;
-import growlab.customer.dto.response.ContactDetailResponse;
-import growlab.customer.dto.response.CorporateCustomerResponse;
-import growlab.customer.dto.response.ShareHolderResponse;
+import growlab.customer.dto.response.*;
 import growlab.customer.enums.CustomerType;
 import growlab.customer.mapper.CorporateCustomerMapper;
 import growlab.customer.repository.CustomerRepository;
-import growlab.customer.service.ContactDetailService;
-import growlab.customer.service.CorporateCustomerService;
-import growlab.customer.service.ShareHolderService;
+import growlab.customer.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,12 +24,13 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
     private final CorporateCustomerMapper customerMapper;
     private final ContactDetailService contactDetailService;
     private final ShareHolderService shareHolderService;
+    private final CountryService countryService;
+    private final CityService cityService;
 
     @Override
     public Integer create(CreatedCorporateCustomer request) {
         Customer customer = customerMapper.toEntity(request);
         customer.setCustomerType(CustomerType.CORPORATE);
-        customer.setCreatedAt(LocalDateTime.now());
         Integer corporateCustomerId = customerRepository.create(customer);
 
         for (CreatedContactDetail createdContactDetail : request.getContactDetails()) {
@@ -42,7 +38,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         }
 
         for (CreatedShareholder createdShareholder : request.getShareholders()) {
-            shareHolderService.addShareholder(createdShareholder);
+            shareHolderService.addShareholder(corporateCustomerId, createdShareholder);
         }
 
         return corporateCustomerId;
@@ -50,9 +46,12 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
 
     @Override
     public CorporateCustomerResponse getById(Integer id) {
-
-        Customer customer = customerRepository.getById(id);
+        Customer customer = customerRepository.getCorporateCustomerById(id);
         CorporateCustomerResponse customerResponse = customerMapper.toResponse(customer);
+        CountryResponse country = countryService.getById(customer.getLegalCountryId());
+        CityResponse city = cityService.getById(customer.getLegalCityId());
+        customerResponse.setLegalCountry(country.getName());
+        customerResponse.setLegalCity(city.getName());
 
         List<ShareHolderResponse> shareHolderResponseList = shareHolderService.shareHolderResponses(customer.getId());
         List<ContactDetailResponse> contactDetailResponseList = contactDetailService.contactDetailResponses(customer.getId());
@@ -74,7 +73,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
     @Override
     public void update(Integer id, UpdatedCorporateCustomer request) {
 
-        Customer customer = customerRepository.getById(id);
+        Customer customer = customerRepository.getCorporateCustomerById(id);
         customerMapper.updateEntity(customer, request);
         customerRepository.update(id, customer);
     }

@@ -10,24 +10,17 @@ public class CorporateCustomerResponse {
 
     private Integer internalId;
     private String name;
-    private String surname;
-    private String middleName;
-    private String registrationAddress1;
-    private String registrationAddress2;
-    private String registrationAddress3;
-    private String registrationAddress4;
-    private String residentialAddress1;
-    private String residentialAddress2;
-    private String residentialAddress3;
-    private String residentialAddress4;
+    private String legalCountry;
+    private String legalCity;
     private String authority;
     private Integer voen;
-    private Integer createdBy;
+    private String createdBy;
     private LocalDate createdAt;
-    private Integer authBy;
+    private String authBy;
     private LocalDate authAt;
     private Integer status;
     private String customerCategory;
     private List<ShareHolderResponse> shareHolderResponses;
     private List<ContactDetailResponse> contactDetailResponses;
+
 }

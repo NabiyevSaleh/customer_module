@@ -1,7 +1,5 @@
 package growlab.customer.controller;
 
-import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.UpdatedContactDetail;
 import growlab.customer.dto.request.CreatedIndividualCustomer;
 import growlab.customer.dto.request.UpdatedIndividualCustomer;
 import growlab.customer.dto.response.IndividualCustomerResponse;
@@ -42,25 +40,9 @@ public class IndividualCustomerController {
         individualCustomerService.update(id, customer);
     }
 
-    @PostMapping("/{id}/contact-detail")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addContactDetail(@PathVariable("id") Integer id,
-                                 @RequestBody CreatedContactDetail createdContactDetail) {
-        contactDetailService.addContactDetail(id, createdContactDetail);
-    }
-
-    @PutMapping("/{id}/contact-detail")
-    public void updateContactDetail(@RequestBody UpdatedContactDetail updatedContactDetail, @PathVariable("id") Integer id) {
-        contactDetailService.updateContactDetail(id, updatedContactDetail);
-    }
-
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable("id") Integer id) {
         individualCustomerService.delete(id);
     }
 
-    @DeleteMapping("/contact-detail/{id}")
-    public void deleteContactDetail(@PathVariable("id") Integer id) {
-        contactDetailService.delete(id);
-    }
 }

@@ -21,7 +21,7 @@ public class IndividualCustomerResponse {
     private String residentialAddress3;
     private String residentialAddress4;
     private String authority;
-    private Integer voen;
+    private String voen;
     private Integer createdBy;
     private LocalDate createdAt;
     private Integer authBy;

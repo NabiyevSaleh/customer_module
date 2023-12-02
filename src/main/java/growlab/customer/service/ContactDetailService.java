@@ -1,7 +1,7 @@
 package growlab.customer.service;
 
-import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.UpdatedContactDetail;
+import growlab.customer.dto.request.CreatedContactDetail;
+import growlab.customer.dto.request.UpdatedContactDetail;
 import growlab.customer.dto.response.ContactDetailResponse;
 import org.springframework.stereotype.Service;
 

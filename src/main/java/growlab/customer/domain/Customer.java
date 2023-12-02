@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -35,10 +34,10 @@ public class Customer {
     private String voen;
     private CustomerType customerType;
     private LocalDate registrationDate;
-    private Integer createdBy;
-    private LocalDateTime createdAt;
-    private Integer authBy;
-    private LocalDateTime authAt;
+    private String createdBy;
+    private LocalDate createdAt;
+    private String authBy;
+    private LocalDate authAt;
     private Integer status;
     private CustomerCategory customerCategory;
 

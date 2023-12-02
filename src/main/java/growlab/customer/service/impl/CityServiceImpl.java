@@ -1,7 +1,7 @@
 package growlab.customer.service.impl;
 
 import growlab.customer.domain.City;
-import growlab.customer.dto.CreatedCity;
+import growlab.customer.dto.request.CreatedCity;
 import growlab.customer.dto.response.CityResponse;
 import growlab.customer.mapper.CityMapper;
 import growlab.customer.repository.CityRepository;
@@ -32,8 +32,8 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<CityResponse> getAll() {
-        List<City> cities = cityRepository.getAll();
+    public List<CityResponse> getAllByCountryId(Integer countryId) {
+        List<City> cities = cityRepository.getAllByCountryId(countryId);
         return cities.stream()
                 .map(cityMapper::toResponse)
                 .collect(Collectors.toList());

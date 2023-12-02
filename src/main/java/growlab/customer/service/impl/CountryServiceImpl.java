@@ -1,11 +1,12 @@
 package growlab.customer.service.impl;
 
 import growlab.customer.domain.Country;
-import growlab.customer.dto.CreatedCountry;
+import growlab.customer.dto.request.CreatedCountry;
 import growlab.customer.dto.response.CountryResponse;
 import growlab.customer.mapper.CountryMapper;
 import growlab.customer.repository.CountryRepository;
 import growlab.customer.service.CityService;
+import growlab.customer.service.CountryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CountryServiceImpl {
+public class CountryServiceImpl implements CountryService {
 
     private final CountryRepository countryRepository;
     private final CountryMapper countryMapper;

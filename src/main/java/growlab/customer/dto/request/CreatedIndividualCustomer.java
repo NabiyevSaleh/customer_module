@@ -1,12 +1,10 @@
 package growlab.customer.dto.request;
 
-import growlab.customer.dto.CreatedContactDetail;
 import growlab.customer.dto.CreatedIndividualCustomerDetail;
 import growlab.customer.enums.CustomerCategory;
 import lombok.Data;
 
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data

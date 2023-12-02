@@ -1,8 +1,8 @@
 package growlab.customer.mapper;
 
 import growlab.customer.domain.Country;
-import growlab.customer.dto.CreatedCountry;
-import growlab.customer.dto.UpdatedCountry;
+import growlab.customer.dto.request.CreatedCountry;
+import growlab.customer.dto.request.UpdatedCountry;
 import growlab.customer.dto.response.CountryResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

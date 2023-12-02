@@ -6,6 +6,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 
 @Configuration
 public class RowMapperConfig {
@@ -32,33 +38,34 @@ public class RowMapperConfig {
 
     @Bean("customerRowMapper")
     public RowMapper<Customer> getCustomerRowMapper() {
+
         return (rs, rowNum) -> Customer.builder()
-                .id(rs.getInt("id"))
-                .internalId(rs.getInt("internal_id"))
-                .name(rs.getString("name"))
-                .surname(rs.getString("surname"))
-                .middleName(rs.getString("middlename"))
-                .legalCountryId(rs.getInt("legal_country_id"))
-                .legalCityId(rs.getInt("legal_city_id"))
-                .registrationAddress1(rs.getString("registration_address1"))
-                .registrationAddress2(rs.getString("registration_address2"))
-                .registrationAddress3(rs.getString("registration_address3"))
-                .registrationAddress4(rs.getString("registration_address4"))
-                .residentialAddress1(rs.getString("residential_address1"))
-                .residentialAddress2(rs.getString("residential_address2"))
-                .residentialAddress3(rs.getString("residential_address3"))
-                .residentialAddress4(rs.getString("residential_address4"))
-                .authority(rs.getString("authority"))
-                .voen(rs.getString("voen"))
-                .customerType(CustomerType.valueOf(rs.getString("customer_type")))
-                .registrationDate(rs.getDate("registration_date").toLocalDate())
-                .createdBy(rs.getInt("created_by"))
-                .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
-                .authBy(rs.getInt("auth_by"))
-                .authAt(rs.getTimestamp("auth_at").toLocalDateTime())
-                .status(rs.getInt("status"))
-                .customerCategory(CustomerCategory.valueOf(rs.getString("customer_category")))
-                .build();
+                    .id(rs.getInt("id"))
+                    .internalId(rs.getInt("internal_id"))
+                    .name(rs.getString("name"))
+                    .surname(rs.getString("surname"))
+                    .middleName(rs.getString("middlename"))
+                    .legalCountryId(rs.getInt("legal_country_id"))
+                    .legalCityId(rs.getInt("legal_city_id"))
+                    .registrationAddress1(rs.getString("registration_address1"))
+                    .registrationAddress2(rs.getString("registration_address2"))
+                    .registrationAddress3(rs.getString("registration_address3"))
+                    .registrationAddress4(rs.getString("registration_address4"))
+                    .residentialAddress1(rs.getString("residential_address1"))
+                    .residentialAddress2(rs.getString("residential_address2"))
+                    .residentialAddress3(rs.getString("residential_address3"))
+                    .residentialAddress4(rs.getString("residential_address4"))
+                    .authority(rs.getString("authority"))
+                    .voen(rs.getString("voen"))
+                    .customerType(CustomerType.valueOf(rs.getString("customer_type")))
+                    .registrationDate(checkDate(rs.getDate("registration_date")))
+                    .createdBy(rs.getString("created_by"))
+                    .createdAt(checkDate(rs.getDate("created_at")))
+                    .authBy(rs.getString("auth_by"))
+                    .authAt(checkDate(rs.getDate("auth_at")))
+                    .status(rs.getInt("status"))
+                    .customerCategory(CustomerCategory.valueOf(rs.getString("customer_category")))
+                    .build();
     }
 
     @Bean("corporateCustomerShareholderRowMapper")
@@ -110,6 +117,14 @@ public class RowMapperConfig {
                 .countryId(rs.getInt("country_id"))
                 .name(rs.getString("name"))
                 .build();
+    }
+
+    private LocalDate checkDate(Date date){
+        LocalDate result = null;
+        if (!Objects.isNull(date)) {
+            result = date.toLocalDate();
+        }
+        return result;
     }
 
 }

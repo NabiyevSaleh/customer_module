@@ -1,7 +1,5 @@
 package growlab.customer.dto.request;
 
-import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.CreatedShareholder;
 import growlab.customer.enums.CustomerCategory;
 import lombok.Data;
 
@@ -20,8 +18,9 @@ public class CreatedCorporateCustomer {
     private String authority;
     private String voen;
     private LocalDate registrationDate;
-    private Integer createdBy;
-    private Integer authBy;
+    private String createdBy;
+    private LocalDate createdAt;
+    private String authBy;
     private LocalDate authAt;
 
     @Min(0)

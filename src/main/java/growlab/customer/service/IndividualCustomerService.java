@@ -1,8 +1,5 @@
 package growlab.customer.service;
 
-import growlab.customer.domain.IndividualCustomerDetail;
-import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.UpdatedContactDetail;
 import growlab.customer.dto.request.CreatedIndividualCustomer;
 import growlab.customer.dto.request.UpdatedIndividualCustomer;
 import growlab.customer.dto.response.IndividualCustomerDetailResponse;

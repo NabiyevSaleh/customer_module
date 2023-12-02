@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Data
 public class IndividualCustomerDetailResponse {
 
-    private Integer pin;
+    private String pin;
     private String uniqueIdName;
     private String uniqueIdValue;
     private Integer birthCountryId;

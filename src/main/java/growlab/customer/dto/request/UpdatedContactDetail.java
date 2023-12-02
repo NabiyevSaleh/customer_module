@@ -1,10 +1,10 @@
-package growlab.customer.dto;
+package growlab.customer.dto.request;
 
 import growlab.customer.enums.ContactType;
 import lombok.Data;
 
 @Data
-public class CreatedContactDetail {
+public class UpdatedContactDetail {
 
     private ContactType contactType;
     private String contactValue;

@@ -2,8 +2,8 @@ package growlab.customer.service.impl;
 
 
 import growlab.customer.domain.CustomerContactDetail;
-import growlab.customer.dto.CreatedContactDetail;
-import growlab.customer.dto.UpdatedContactDetail;
+import growlab.customer.dto.request.CreatedContactDetail;
+import growlab.customer.dto.request.UpdatedContactDetail;
 import growlab.customer.dto.response.ContactDetailResponse;
 import growlab.customer.mapper.CustomerContactDetailMapper;
 import growlab.customer.repository.CustomerContactDetailRepository;

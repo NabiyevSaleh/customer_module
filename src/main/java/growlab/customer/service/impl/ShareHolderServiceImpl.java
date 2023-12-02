@@ -1,8 +1,8 @@
 package growlab.customer.service.impl;
 
 import growlab.customer.domain.CorporateCustomerShareholder;
-import growlab.customer.dto.CreatedShareholder;
-import growlab.customer.dto.UpdatedShareholder;
+import growlab.customer.dto.request.CreatedShareholder;
+import growlab.customer.dto.request.UpdatedShareholder;
 import growlab.customer.dto.response.ShareHolderResponse;
 import growlab.customer.mapper.ShareHolderMapper;
 import growlab.customer.repository.CorporateCustomerShareholderRepository;
@@ -21,8 +21,9 @@ public class ShareHolderServiceImpl implements ShareHolderService {
     private final ShareHolderMapper shareHolderMapper;
 
     @Override
-    public Integer addShareholder(CreatedShareholder createdShareholder) {
+    public Integer addShareholder(Integer customerId, CreatedShareholder createdShareholder) {
         CorporateCustomerShareholder corporateCustomerShareholder = shareHolderMapper.toEntity(createdShareholder);
+        corporateCustomerShareholder.setCustomerId(customerId);
         return shareholderRepository.create(corporateCustomerShareholder);
     }
 
