@@ -20,11 +20,23 @@ public class ContactDetailService {
     private final CustomerContactDetailMapper contactDetailMapper;
     private final CustomerContactDetailRepository contactDetailRepository;
 
-    public Integer addContactDetail(Integer customerId, CreatedContactDetail createdContactDetail) {
+    public void addContactDetail(Integer customerId, CreatedContactDetail createdContactDetail) {
         CustomerContactDetail contactDetail = contactDetailMapper.toEntity(createdContactDetail);
         contactDetail.setCustomerId(customerId);
         contactDetail.setIsActive(1);
-        return contactDetailRepository.create(contactDetail);
+        contactDetailRepository.create(contactDetail);
+    }
+
+    public void createContactDetails(Integer customerId, List<CreatedContactDetail> createdContactDetails) {
+        List<CustomerContactDetail> contactDetails = createdContactDetails.stream()
+                .map(createdContactDetail -> {
+                    CustomerContactDetail contactDetail = contactDetailMapper.toEntity(createdContactDetail);
+                    contactDetail.setCustomerId(customerId);
+                    contactDetail.setIsActive(1);
+                    return contactDetail;
+                })
+                .collect(Collectors.toList());
+        contactDetailRepository.createAll(contactDetails);
     }
 
     public void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail) {

@@ -6,7 +6,7 @@ import growlab.customer.dto.request.UpdatedCorporateCustomer;
 import growlab.customer.dto.request.UpdatedShareholder;
 import growlab.customer.dto.response.CorporateCustomerResponse;
 import growlab.customer.service.CorporateCustomerService;
-import growlab.customer.service.ShareHolderService;
+import growlab.customer.service.ShareholderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CorporateCustomerController {
 
     private final CorporateCustomerService corporateCustomerService;
-    private final ShareHolderService shareHolderService;
+    private final ShareholderService shareHolderService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

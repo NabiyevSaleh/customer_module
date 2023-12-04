@@ -84,18 +84,6 @@ public class CustomerRepository {
         }
     }
 
-    public List<Customer> getAll() {
-        String sql = "SELECT * FROM customers AND status = :status";
-        try {
-            return jdbc.query(sql,
-                    new MapSqlParameterSource()
-                            .addValue("status", 1),
-                    customerRowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE);
-        }
-    }
-
     public List<Customer> getAllByType(CustomerType type) {
         String sql = "SELECT * FROM customers WHERE customer_type = :customerType AND status = :status";
         try {
@@ -169,4 +157,5 @@ public class CustomerRepository {
             getInternalId();
         }
     }
+
 }

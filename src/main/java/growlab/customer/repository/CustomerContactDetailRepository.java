@@ -7,8 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,17 +20,27 @@ public class CustomerContactDetailRepository {
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<CustomerContactDetail> customerContactDetailRowMapper;
 
-    public Integer create(CustomerContactDetail contactDetails) {
+    public void create(CustomerContactDetail contactDetail) {
         String sql = "INSERT INTO customer_contact_details (customer_id, contact_type, contact_value, is_active) VALUES (:customerId, :contactType, :contactValue, :isActive)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbc.update(sql,
-                new MapSqlParameterSource()
-                        .addValue("customerId", contactDetails.getCustomerId())
-                        .addValue("contactType", contactDetails.getContactType().toString())
-                        .addValue("contactValue", contactDetails.getContactValue())
-                        .addValue("isActive", 1),
-                keyHolder);
-        return keyHolder.getKey().intValue();
+        MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource()
+                .addValue("customerId", contactDetail.getCustomerId())
+                .addValue("contactType", contactDetail.getContactType().toString())
+                .addValue("contactValue", contactDetail.getContactValue())
+                .addValue("isActive", 1);
+        jdbc.update(sql, sqlParameterSource);
+
+    }
+
+    public void createAll(List<CustomerContactDetail> contactDetails) {
+        String sql = "INSERT INTO customer_contact_details (customer_id, contact_type, contact_value, is_active) VALUES (:customerId, :contactType, :contactValue, :isActive)";
+        SqlParameterSource[] batchArgs = contactDetails.stream()
+                .map(contactDetail -> new MapSqlParameterSource()
+                        .addValue("customerId", contactDetail.getCustomerId())
+                        .addValue("contactType", contactDetail.getContactType().toString())
+                        .addValue("contactValue", contactDetail.getContactValue())
+                        .addValue("isActive", 1))
+                .toArray(SqlParameterSource[]::new);
+        jdbc.batchUpdate(sql, batchArgs);
     }
 
     public CustomerContactDetail getById(Integer id) {

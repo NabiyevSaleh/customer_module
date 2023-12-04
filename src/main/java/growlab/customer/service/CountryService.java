@@ -19,9 +19,9 @@ public class CountryService {
     private final CountryMapper countryMapper;
     private final CityService cityService;
 
-    public Integer create(CreatedCountry request) {
+    public void create(CreatedCountry request) {
         Country country = countryMapper.toEntity(request);
-        return countryRepository.create(country);
+        countryRepository.create(country);
     }
 
     public CountryResponse getById(Integer id) {

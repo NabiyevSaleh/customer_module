@@ -37,6 +37,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(IncompatibleCityException.class)
+    public ResponseEntity<ErrorResponse> handleIncompatibleCityException(IncompatibleCityException exception) {
+        var error = new ErrorResponse(UUID.randomUUID(), HttpStatus.NOT_FOUND.value(), exception.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
 
 }
 

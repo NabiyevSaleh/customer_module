@@ -1,9 +1,7 @@
 package growlab.customer.service;
 
 import growlab.customer.domain.Customer;
-import growlab.customer.dto.request.CreatedContactDetail;
 import growlab.customer.dto.request.CreatedCorporateCustomer;
-import growlab.customer.dto.request.CreatedShareholder;
 import growlab.customer.dto.request.UpdatedCorporateCustomer;
 import growlab.customer.dto.response.*;
 import growlab.customer.enums.CustomerType;
@@ -23,7 +21,7 @@ public class CorporateCustomerService {
     private final CustomerRepository customerRepository;
     private final CorporateCustomerMapper customerMapper;
     private final ContactDetailService contactDetailService;
-    private final ShareHolderService shareHolderService;
+    private final ShareholderService shareHolderService;
     private final CountryService countryService;
     private final CityService cityService;
 
@@ -35,13 +33,8 @@ public class CorporateCustomerService {
         customer.setCustomerType(CustomerType.CORPORATE);
         Integer corporateCustomerId = customerRepository.create(customer);
 
-        for (CreatedContactDetail createdContactDetail : request.getContactDetails()) {
-            contactDetailService.addContactDetail(corporateCustomerId, createdContactDetail);
-        }
-
-        for (CreatedShareholder createdShareholder : request.getShareholders()) {
-            shareHolderService.addShareholder(corporateCustomerId, createdShareholder);
-        }
+        contactDetailService.createContactDetails(corporateCustomerId, request.getContactDetails());
+        shareHolderService.createShareholders(corporateCustomerId, request.getShareholders());
 
         return corporateCustomerId;
     }
@@ -82,9 +75,9 @@ public class CorporateCustomerService {
         CityResponse city = cityService.getById(customer.getLegalCityId());
         response.setLegalCity(city.getName());
 
-        List<ShareHolderResponse> shareHolderResponses =
+        List<ShareholderResponse> shareholderRespons =
                 shareHolderService.getAllByCustomerId(customer.getId());
-        response.setShareHolderResponses(shareHolderResponses);
+        response.setShareholderRespons(shareholderRespons);
 
         List<ContactDetailResponse> contactDetailResponses =
                 contactDetailService.getAllByCustomerId(customer.getId());

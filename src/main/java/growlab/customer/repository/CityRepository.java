@@ -7,8 +7,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,15 +19,12 @@ public class CityRepository {
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<City> cityRowMapper;
 
-    public Integer create(Integer countryId, City city) {
+    public void create(Integer countryId, City city) {
         String sql = "INSERT INTO cities (country_id, name) VALUES (:countryId, :name)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
                         .addValue("countryId", countryId)
-                        .addValue("name", city.getName()),
-                keyHolder);
-        return keyHolder.getKey().intValue();
+                        .addValue("name", city.getName()));
     }
 
     public City getById(Integer id) {
@@ -54,10 +49,6 @@ public class CityRepository {
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
-    }
-
-    public void update() {
-
     }
 
     public void delete(Integer id) {

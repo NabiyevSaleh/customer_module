@@ -20,4 +20,5 @@ public class IndividualCustomerDetailResponse {
     private String maritalStatus;
     private String workPlace;
     private String position;
+
 }

@@ -7,8 +7,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,14 +19,11 @@ public class CountryRepository {
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<Country> countryRowMapper;
 
-    public Integer create(Country country) {
+    public void create(Country country) {
         String sql = "INSERT INTO countries (name) VALUES (:name)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
-                        .addValue("name", country.getName()),
-                keyHolder);
-        return keyHolder.getKey().intValue();
+                        .addValue("name", country.getName()));
     }
 
     public Country getById(Integer id) {

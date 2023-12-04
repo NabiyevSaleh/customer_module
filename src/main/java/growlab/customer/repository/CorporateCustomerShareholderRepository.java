@@ -7,8 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,16 +20,24 @@ public class CorporateCustomerShareholderRepository {
     private final NamedParameterJdbcTemplate jdbc;
     private final RowMapper<CorporateCustomerShareholder> corporateCustomerShareholderRowMapper;
 
-    public Integer create(CorporateCustomerShareholder shareholder) {
+    public void create(CorporateCustomerShareholder shareholder) {
         String sql = "INSERT INTO corporate_customer_shareholder (customer_id, shareholder, share_percent) VALUES (:customerId, :shareholder, :sharePercent)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
                         .addValue("customerId", shareholder.getCustomerId())
                         .addValue("shareholder", shareholder.getShareholder())
-                        .addValue("sharePercent", shareholder.getSharePercent()),
-                keyHolder);
-        return keyHolder.getKey().intValue();
+                        .addValue("sharePercent", shareholder.getSharePercent()));
+    }
+
+    public void createAll(List<CorporateCustomerShareholder> shareholders) {
+        String sql = "INSERT INTO corporate_customer_shareholder (customer_id, shareholder, share_percent) VALUES (:customerId, :shareholder, :sharePercent)";
+        SqlParameterSource[] batchArgs = shareholders.stream()
+                .map(shareholder -> new MapSqlParameterSource()
+                        .addValue("customerId", shareholder.getCustomerId())
+                        .addValue("shareholder", shareholder.getShareholder())
+                        .addValue("sharePercent", shareholder.getSharePercent()))
+                .toArray(SqlParameterSource[]::new);
+        jdbc.batchUpdate(sql, batchArgs);
     }
 
     public CorporateCustomerShareholder getById(Integer id) {
@@ -48,20 +55,10 @@ public class CorporateCustomerShareholderRepository {
     public List<CorporateCustomerShareholder> getAllByCustomerId(Integer customerId) {
         String sql = "SELECT * FROM corporate_customer_shareholder WHERE customer_id = :customerId";
         try {
-            List<CorporateCustomerShareholder> result = jdbc.query(sql,
+            return jdbc.query(sql,
                     new MapSqlParameterSource()
                             .addValue("customerId", customerId),
                     corporateCustomerShareholderRowMapper);
-            return result;
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE);
-        }
-    }
-
-    public List<CorporateCustomerShareholder> getAll() {
-        String sql = "SELECT * FROM corporate_customer_shareholder";
-        try {
-            return jdbc.query(sql, corporateCustomerShareholderRowMapper);
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
@@ -99,4 +96,5 @@ public class CorporateCustomerShareholderRepository {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
+
 }

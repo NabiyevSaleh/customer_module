@@ -1,18 +1,12 @@
 package growlab.customer.service;
 
 import growlab.customer.domain.Customer;
-import growlab.customer.domain.IndividualCustomerDetail;
-import growlab.customer.dto.request.CreatedContactDetail;
 import growlab.customer.dto.request.CreatedIndividualCustomer;
 import growlab.customer.dto.request.UpdatedIndividualCustomer;
-import growlab.customer.dto.request.UpdatedIndividualCustomerDetail;
-import growlab.customer.dto.response.IndividualCustomerDetailResponse;
 import growlab.customer.dto.response.IndividualCustomerResponse;
 import growlab.customer.enums.CustomerType;
-import growlab.customer.mapper.IndividualCustomerDetailMapper;
 import growlab.customer.mapper.IndividualCustomerMapper;
 import growlab.customer.repository.CustomerRepository;
-import growlab.customer.repository.IndividualCustomerDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +20,8 @@ public class IndividualCustomerService {
 
     private final CustomerRepository customerRepository;
     private final IndividualCustomerMapper individualCustomerMapper;
-
     private final IndividualCustomerDetailService detailService;
     private final ContactDetailService contactDetailService;
-    private final CountryService countryService;
     private final CityService cityService;
 
     @Transactional
@@ -43,10 +35,7 @@ public class IndividualCustomerService {
         Integer customerId = customerRepository.create(customer);
 
         detailService.create(customerId, request.getDetail());
-
-        for (CreatedContactDetail createdContactDetail : request.getContactDetails()) {
-            contactDetailService.addContactDetail(customerId, createdContactDetail);
-        }
+        contactDetailService.createContactDetails(customerId, request.getContactDetails());
 
         return customerId;
     }

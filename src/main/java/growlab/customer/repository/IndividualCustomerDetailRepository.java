@@ -22,8 +22,7 @@ public class IndividualCustomerDetailRepository {
     private final RowMapper<IndividualCustomerDetail> individualCustomerDetailsRowMapper;
 
     public Integer create(Integer customerId, IndividualCustomerDetail individualCustomerDetail) {
-        String sql = "INSERT INTO individual_customer_details (pin, customer_id, unique_id_name, unique_id_value, birth_country_id, birth_city_id, id_begin_date, id_end_date, image, birthdate, gender, marital_status, work_place, position) " +
-                "VALUES(:pin, :customerId, :uniqueIdName, :uniqueIdValue, :birthCountryId, :birthCityId, :idBeginDate, :idEndDate, :image, :birthdate, :gender, :maritalStatus, :workPlace, :position)";
+        String sql = "INSERT INTO individual_customer_details (pin, customer_id, unique_id_name, unique_id_value, birth_country_id, birth_city_id, id_begin_date, id_end_date, image, birthdate, gender, marital_status, work_place, position) VALUES(:pin, :customerId, :uniqueIdName, :uniqueIdValue, :birthCountryId, :birthCityId, :idBeginDate, :idEndDate, :image, :birthdate, :gender, :maritalStatus, :workPlace, :position)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
@@ -48,33 +47,17 @@ public class IndividualCustomerDetailRepository {
     public IndividualCustomerDetail getByCustomerId(Integer customerId) {
         String sql = "SELECT * FROM individual_customer_details WHERE customer_id = :customerId";
         try {
-            IndividualCustomerDetail result = jdbc.queryForObject(sql,
+            return jdbc.queryForObject(sql,
                     new MapSqlParameterSource()
                             .addValue("customerId", customerId),
                     individualCustomerDetailsRowMapper);
-            return result;
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
     public void update(Integer id, IndividualCustomerDetail individualCustomerDetail) {
-        String sql = "UPDATE individual_customer_details SET " +
-                "pin = :pin, " +
-                "customer_id = :customerId, " +
-                "unique_id_name = :uniqueIdName, " +
-                "unique_id_value = :uniqueIdValue, " +
-                "birth_country_id = :birthCountryId, " +
-                "birth_city_id = :birthCityId, " +
-                "id_begin_date = :idBeginDate, " +
-                "id_end_date = :idEndDate, " +
-                "image = :image, " +
-                "birthdate = :birthdate, " +
-                "gender = :gender, " +
-                "marital_status = :maritalStatus, " +
-                "work_place = :workPlace, " +
-                "position = :position " +
-                "WHERE id = :id";
+        String sql = "UPDATE individual_customer_details SET pin = :pin, customer_id = :customerId, unique_id_name = :uniqueIdName, unique_id_value = :uniqueIdValue, birth_country_id = :birthCountryId, birth_city_id = :birthCityId, id_begin_date = :idBeginDate, id_end_date = :idEndDate, image = :image, birthdate = :birthdate, gender = :gender, marital_status = :maritalStatus, work_place = :workPlace, position = :position WHERE id = :id";
 
         try {
             jdbc.update(sql,

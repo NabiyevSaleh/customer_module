@@ -20,7 +20,7 @@ public class CorporateCustomerResponse {
     private LocalDate authAt;
     private Integer status;
     private String customerCategory;
-    private List<ShareHolderResponse> shareHolderResponses;
+    private List<ShareholderResponse> shareholderRespons;
     private List<ContactDetailResponse> contactDetailResponses;
 
 }

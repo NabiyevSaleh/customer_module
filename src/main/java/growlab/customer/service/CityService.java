@@ -20,9 +20,9 @@ public class CityService {
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
 
-    public Integer create(Integer countryId, CreatedCity request) {
+    public void create(Integer countryId, CreatedCity request) {
         City city = cityMapper.toEntity(request);
-        return cityRepository.create(countryId, city);
+        cityRepository.create(countryId, city);
     }
 
     public CityResponse getById(Integer id) {
