@@ -29,16 +29,17 @@ public class CustomerContactDetailRepository {
                         .addValue("customerId", contactDetails.getCustomerId())
                         .addValue("contactType", contactDetails.getContactType().toString())
                         .addValue("contactValue", contactDetails.getContactValue())
-                        .addValue("isActive", contactDetails.getIsActive()),
+                        .addValue("isActive", 1),
                 keyHolder);
         return keyHolder.getKey().intValue();
     }
 
     public CustomerContactDetail getById(Integer id) {
-        String sql = "SELECT * FROM customer_contact_details WHERE id = :id";
+        String sql = "SELECT * FROM customer_contact_details WHERE id = :id AND is_active = :isActive";
         try {
             return jdbc.queryForObject(sql,
                     new MapSqlParameterSource()
+                            .addValue("isActive", 1)
                             .addValue("id", id),
                     customerContactDetailRowMapper);
         } catch (EmptyResultDataAccessException e) {
@@ -47,11 +48,12 @@ public class CustomerContactDetailRepository {
     }
 
     public List<CustomerContactDetail> getAllByCustomerId(Integer customerId) {
-        String sql = "SELECT * FROM customer_contact_details WHERE customer_id = :customerId";
+        String sql = "SELECT * FROM customer_contact_details WHERE customer_id = :customerId AND is_active = :isActive";
         try {
             return jdbc.query(sql,
                     new MapSqlParameterSource()
-                            .addValue("customerId", customerId),
+                            .addValue("customerId", customerId)
+                            .addValue("isActive", 1),
                     customerContactDetailRowMapper);
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
@@ -59,13 +61,12 @@ public class CustomerContactDetailRepository {
     }
 
     public void update(Integer id, CustomerContactDetail request) {
-        String sql = "UPDATE customer_contact_details SET contact_type = :contactType, contact_value = :contactValue, is_active = :isActive WHERE id = :id";
+        String sql = "UPDATE customer_contact_details SET contact_type = :contactType, contact_value = :contactValue  WHERE id = :id";
         try {
             jdbc.update(sql,
                     new MapSqlParameterSource()
                             .addValue("contactType", request.getContactType().toString())
                             .addValue("contactValue", request.getContactValue())
-                            .addValue("isActive", request.getIsActive())
                             .addValue("id", id));
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
@@ -73,9 +74,10 @@ public class CustomerContactDetailRepository {
     }
 
     public void delete(Integer id) {
-        String sql = "DELETE FROM customer_contact_details WHERE id = :id";
+        String sql = "UPDATE customer_contact_details SET is_active = :isActive WHERE id = :id";
         try {
             jdbc.update(sql, new MapSqlParameterSource()
+                    .addValue("isActive", 0)
                     .addValue("id", id));
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
@@ -83,9 +85,10 @@ public class CustomerContactDetailRepository {
     }
 
     public void deleteAllByCustomerId(Integer customerId) {
-        String sql = "DELETE FROM customer_contact_details WHERE customer_id = :customerId";
+        String sql = "UPDATE customer_contact_details SET is_active = :isActive WHERE customer_id = :customerId";
         try {
             jdbc.update(sql, new MapSqlParameterSource()
+                    .addValue("isActive", 0)
                     .addValue("customerId", customerId));
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);

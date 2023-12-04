@@ -8,6 +8,5 @@ public class CreatedContactDetail {
 
     private ContactType contactType;
     private String contactValue;
-    private Integer isActive;
 
 }

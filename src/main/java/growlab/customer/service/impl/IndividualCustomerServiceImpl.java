@@ -16,12 +16,14 @@ import growlab.customer.mapper.IndividualCustomerMapper;
 import growlab.customer.repository.CustomerContactDetailRepository;
 import growlab.customer.repository.CustomerRepository;
 import growlab.customer.repository.IndividualCustomerDetailRepository;
+import growlab.customer.service.CityService;
 import growlab.customer.service.ContactDetailService;
+import growlab.customer.service.CountryService;
 import growlab.customer.service.IndividualCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,9 +38,15 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
     private final CustomerContactDetailRepository contactDetailRepository;
     private final CustomerContactDetailMapper contactDetailMapper;
     private final ContactDetailService contactDetailService;
+    private final CountryService countryService;
+    private final CityService cityService;
 
     @Override
+    @Transactional
     public Integer create(CreatedIndividualCustomer request) {
+        cityService.checkCompatibilityWithCountry(
+                request.getDetail().getBirthCityId(),
+                request.getDetail().getBirthCountryId());
 
         Customer customer = individualCustomerMapper.toEntity(request);
         customer.setCustomerType(CustomerType.INDIVIDUAL);
@@ -75,14 +83,17 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
 
     @Override
     public List<IndividualCustomerResponse> getAll() {
-        List<Customer> customers = customerRepository.getAllByType(CustomerType.INDIVIDUAL);
-        return customers.stream()
+        return customerRepository.getAllByType(CustomerType.INDIVIDUAL).stream()
                 .map(customer -> getById(customer.getId()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public void update(Integer id, UpdatedIndividualCustomer request) {
+        cityService.checkCompatibilityWithCountry(
+                request.getDetail().getBirthCityId(),
+                request.getDetail().getBirthCountryId());
+
         Customer customer = customerRepository.getIndividualCustomerById(id);
         individualCustomerMapper.updateEntity(customer, request);
         customerRepository.update(id, customer);
@@ -95,12 +106,14 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
     @Override
     public IndividualCustomerDetailResponse getIndividualCustomerDetail(Integer customerId) {
         IndividualCustomerDetail detail = detailRepository.getByCustomerId(customerId);
-        return detailMapper.toResponse(detail);
+        IndividualCustomerDetailResponse detailResponse = detailMapper.toResponse(detail);
+        detailResponse.setBirthCity(countryService.getById(detail.getBirthCountryId()).getName());
+        detailResponse.setBirthCity(cityService.getById(detail.getBirthCityId()).getName());
+        return detailResponse;
     }
 
     @Override
     public void delete(Integer id) {
-        detailRepository.deleteByCustomerId(id);
         contactDetailService.deleteAllByCustomerId(id);
         customerRepository.delete(id);
     }

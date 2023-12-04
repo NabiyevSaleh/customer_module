@@ -10,8 +10,8 @@ public class IndividualCustomerDetailResponse {
     private String pin;
     private String uniqueIdName;
     private String uniqueIdValue;
-    private Integer birthCountryId;
-    private Integer birthCityId;
+    private String birthCountry;
+    private String birthCity;
     private LocalDate idBeginDate;
     private LocalDate idEndDate;
     private String image;

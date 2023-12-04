@@ -29,6 +29,8 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
 
     @Override
     public Integer create(CreatedCorporateCustomer request) {
+        cityService.checkCompatibilityWithCountry(request.getLegalCityId(), request.getLegalCountryId());
+
         Customer customer = customerMapper.toEntity(request);
         customer.setCustomerType(CustomerType.CORPORATE);
         Integer corporateCustomerId = customerRepository.create(customer);
@@ -54,7 +56,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
         customerResponse.setLegalCity(city.getName());
 
         List<ShareHolderResponse> shareHolderResponseList = shareHolderService.shareHolderResponses(customer.getId());
-        List<ContactDetailResponse> contactDetailResponseList = contactDetailService.contactDetailResponses(customer.getId());
+        List<ContactDetailResponse> contactDetailResponseList = contactDetailService.getAllByCustomerId(customer.getId());
 
         customerResponse.setShareHolderResponses(shareHolderResponseList);
         customerResponse.setContactDetailResponses(contactDetailResponseList);
@@ -72,6 +74,7 @@ public class CorporateCustomerServiceImpl implements CorporateCustomerService {
 
     @Override
     public void update(Integer id, UpdatedCorporateCustomer request) {
+        cityService.checkCompatibilityWithCountry(request.getLegalCityId(), request.getLegalCountryId());
 
         Customer customer = customerRepository.getCorporateCustomerById(id);
         customerMapper.updateEntity(customer, request);

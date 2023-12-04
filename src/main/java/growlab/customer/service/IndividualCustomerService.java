@@ -21,5 +21,5 @@ public interface IndividualCustomerService {
 
     IndividualCustomerDetailResponse getIndividualCustomerDetail(Integer customerId);
 
-    public void delete(Integer id);
+    void delete(Integer id);
 }

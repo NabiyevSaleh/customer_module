@@ -99,14 +99,5 @@ public class IndividualCustomerDetailRepository {
         }
     }
 
-    public void deleteByCustomerId(Integer customerId) {
-        String sql = "DELETE FROM individual_customer_details WHERE customer_id = :customerId";
-        try {
-            jdbc.update(sql, new MapSqlParameterSource()
-                    .addValue("customerId", customerId));
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE);
-        }
-    }
 }
 

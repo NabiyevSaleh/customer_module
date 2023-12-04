@@ -3,7 +3,6 @@ package growlab.customer.controller;
 import growlab.customer.dto.request.CreatedIndividualCustomer;
 import growlab.customer.dto.request.UpdatedIndividualCustomer;
 import growlab.customer.dto.response.IndividualCustomerResponse;
-import growlab.customer.service.ContactDetailService;
 import growlab.customer.service.IndividualCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,11 +12,10 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/individual-customer")
+@RequestMapping("/api/v1/individual-customers")
 public class IndividualCustomerController {
 
     private final IndividualCustomerService individualCustomerService;
-    private final ContactDetailService contactDetailService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -36,7 +34,8 @@ public class IndividualCustomerController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody UpdatedIndividualCustomer customer) {
+    public void update(@PathVariable("id") Integer id,
+                       @RequestBody UpdatedIndividualCustomer customer) {
         individualCustomerService.update(id, customer);
     }
 

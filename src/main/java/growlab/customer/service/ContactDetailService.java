@@ -13,7 +13,7 @@ public interface ContactDetailService {
     Integer addContactDetail(Integer customerId, CreatedContactDetail createdContactDetail);
 
     void updateContactDetail(Integer contactDetailId, UpdatedContactDetail updatedContactDetail);
-    List<ContactDetailResponse> contactDetailResponses (Integer customerId);
+    List<ContactDetailResponse> getAllByCustomerId (Integer customerId);
 
     void delete(Integer id);
 

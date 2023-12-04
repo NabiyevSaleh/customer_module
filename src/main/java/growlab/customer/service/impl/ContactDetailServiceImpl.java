@@ -25,6 +25,7 @@ public class ContactDetailServiceImpl implements ContactDetailService {
     public Integer addContactDetail(Integer customerId, CreatedContactDetail createdContactDetail) {
         CustomerContactDetail contactDetail = contactDetailMapper.toEntity(createdContactDetail);
         contactDetail.setCustomerId(customerId);
+        contactDetail.setIsActive(1);
         return contactDetailRepository.create(contactDetail);
     }
 
@@ -36,12 +37,11 @@ public class ContactDetailServiceImpl implements ContactDetailService {
     }
 
     @Override
-    public List<ContactDetailResponse> contactDetailResponses(Integer customerId) {
+    public List<ContactDetailResponse> getAllByCustomerId(Integer customerId) {
         List<CustomerContactDetail> contactDetails = contactDetailRepository.getAllByCustomerId(customerId);
-        List<ContactDetailResponse> contactDetailResponseList = contactDetails.stream()
+        return contactDetails.stream()
                 .map(contactDetailMapper::toResponse)
                 .collect(Collectors.toList());
-        return contactDetailResponseList;
     }
 
     @Override

@@ -9,13 +9,15 @@ import java.util.List;
 @Service
 public interface CityService{
 
-    public Integer create(Integer countryId, CreatedCity request);
+    Integer create(Integer countryId, CreatedCity request);
 
-    public CityResponse getById(Integer id);
+    CityResponse getById(Integer id);
 
-    public List<CityResponse> getAllByCountryId(Integer countryId);
+    List<CityResponse> getAllByCountryId(Integer countryId);
 
-    public void delete(Integer id);
+    void delete(Integer id);
 
-    public void deleteAllByCountryId(Integer countryId);
+    void deleteAllByCountryId(Integer countryId);
+
+    void checkCompatibilityWithCountry(Integer cityId, Integer countryId);
 }

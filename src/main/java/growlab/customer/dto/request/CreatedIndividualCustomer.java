@@ -1,6 +1,5 @@
 package growlab.customer.dto.request;
 
-import growlab.customer.dto.CreatedIndividualCustomerDetail;
 import growlab.customer.enums.CustomerCategory;
 import lombok.Data;
 

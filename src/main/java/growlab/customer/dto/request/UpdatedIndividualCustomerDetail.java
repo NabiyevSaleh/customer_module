@@ -1,13 +1,11 @@
-package growlab.customer.dto;
+package growlab.customer.dto.request;
 
-import growlab.customer.enums.Gender;
-import growlab.customer.enums.MaritalStatus;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class CreatedIndividualCustomerDetail {
+public class UpdatedIndividualCustomerDetail {
 
     private String pin;
     private String uniqueIdName;
@@ -18,8 +16,8 @@ public class CreatedIndividualCustomerDetail {
     private LocalDate idEndDate;
     private String image;
     private LocalDate birthdate;
-    private Gender gender;
-    private MaritalStatus maritalStatus;
+    private String gender;
+    private String maritalStatus;
     private String workPlace;
     private String position;
 

@@ -22,7 +22,8 @@ public class ShareHolderServiceImpl implements ShareHolderService {
 
     @Override
     public Integer addShareholder(Integer customerId, CreatedShareholder createdShareholder) {
-        CorporateCustomerShareholder corporateCustomerShareholder = shareHolderMapper.toEntity(createdShareholder);
+        CorporateCustomerShareholder corporateCustomerShareholder =
+                shareHolderMapper.toEntity(createdShareholder);
         corporateCustomerShareholder.setCustomerId(customerId);
         return shareholderRepository.create(corporateCustomerShareholder);
     }
@@ -41,12 +42,9 @@ public class ShareHolderServiceImpl implements ShareHolderService {
         List<CorporateCustomerShareholder> shareholders
                 = shareholderRepository.getByCustomerId(customerId);
 
-        List<ShareHolderResponse> shareHolderResponseList =
-                shareholders.stream()
-                        .map(shareHolderMapper::toResponse)
-                        .collect(Collectors.toList());
-
-        return shareHolderResponseList;
+        return shareholders.stream()
+                .map(shareHolderMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override

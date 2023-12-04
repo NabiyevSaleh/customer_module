@@ -50,19 +50,20 @@ public class CustomerRepository {
                         .addValue("createdAt", customer.getCreatedAt())
                         .addValue("authBy", customer.getAuthBy())
                         .addValue("authAt", customer.getAuthAt())
-                        .addValue("status", customer.getStatus())
+                        .addValue("status", 1)
                         .addValue("customerCategory", customer.getCustomerCategory().name()),
                 keyHolder);
         return keyHolder.getKey().intValue();
     }
 
     public Customer getIndividualCustomerById(Integer id) {
-        String sql = "SELECT * FROM customers WHERE id = :id AND customer_type = :type";
+        String sql = "SELECT * FROM customers WHERE id = :id AND customer_type = :type AND status = :status";
         try {
             return jdbc.queryForObject(sql,
                     new MapSqlParameterSource()
                             .addValue("id", id)
-                            .addValue("type", CustomerType.INDIVIDUAL.toString()),
+                            .addValue("type", CustomerType.INDIVIDUAL.toString())
+                            .addValue("status", 1),
                     customerRowMapper);
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
@@ -70,12 +71,13 @@ public class CustomerRepository {
     }
 
     public Customer getCorporateCustomerById(Integer id) {
-        String sql = "SELECT * FROM customers WHERE id = :id AND customer_type = :type";
+        String sql = "SELECT * FROM customers WHERE id = :id AND customer_type = :type AND status = :status";
         try {
             return jdbc.queryForObject(sql,
                     new MapSqlParameterSource()
                             .addValue("id", id)
-                            .addValue("type", CustomerType.CORPORATE.toString()),
+                            .addValue("type", CustomerType.CORPORATE.toString())
+                            .addValue("status", 1),
                     customerRowMapper);
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
@@ -83,20 +85,24 @@ public class CustomerRepository {
     }
 
     public List<Customer> getAll() {
-        String sql = "SELECT * FROM customers";
+        String sql = "SELECT * FROM customers AND status = :status";
         try {
-            return jdbc.query(sql, customerRowMapper);
+            return jdbc.query(sql,
+                    new MapSqlParameterSource()
+                            .addValue("status", 1),
+                    customerRowMapper);
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
         }
     }
 
     public List<Customer> getAllByType(CustomerType type) {
-        String sql = "SELECT * FROM customers WHERE customer_type = :customerType";
+        String sql = "SELECT * FROM customers WHERE customer_type = :customerType AND status = :status";
         try {
             return jdbc.query(sql,
                     new MapSqlParameterSource()
-                            .addValue("customerType", type.toString()),
+                            .addValue("customerType", type.toString())
+                            .addValue("status", 1),
                     customerRowMapper);
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
@@ -104,7 +110,7 @@ public class CustomerRepository {
     }
 
     public void update(Integer id, Customer customer) {
-        String sql = "UPDATE customers SET name = :name, surname = :surname, middlename = :middleName, registration_address1 = :registrationAddress1, registration_address2 = :registrationAddress2, registration_address3 = :registrationAddress3, registration_address4 = :registrationAddress4, residential_address1 = :residentialAddress1, residential_address2 = :residentialAddress2, residential_address3 = :residentialAddress3, residential_address4 = :residentialAddress4, authority = :authority, voen = :voen, status = :status, customer_category = :customerCategory WHERE id = :id";
+        String sql = "UPDATE customers SET name = :name, surname = :surname, middlename = :middleName, registration_address1 = :registrationAddress1, registration_address2 = :registrationAddress2, registration_address3 = :registrationAddress3, registration_address4 = :registrationAddress4, residential_address1 = :residentialAddress1, residential_address2 = :residentialAddress2, residential_address3 = :residentialAddress3, residential_address4 = :residentialAddress4, authority = :authority, voen = :voen, customer_category = :customerCategory WHERE id = :id";
         try {
             jdbc.update(sql,
                     new MapSqlParameterSource()
@@ -123,7 +129,6 @@ public class CustomerRepository {
                             .addValue("residentialAddress4", customer.getResidentialAddress4())
                             .addValue("authority", customer.getAuthority())
                             .addValue("voen", customer.getVoen())
-                            .addValue("status", customer.getStatus())
                             .addValue("customerCategory", customer.getCustomerCategory().name())
                             .addValue("id", id));
         } catch (EmptyResultDataAccessException e) {
@@ -133,9 +138,10 @@ public class CustomerRepository {
     }
 
     public void delete(Integer id) {
-        String sql = "DELETE FROM customers WHERE id = :id";
+        String sql = "UPDATE customers SET status = :status WHERE id = :id";
         try {
             jdbc.update(sql, new MapSqlParameterSource()
+                    .addValue("status", 2)
                     .addValue("id", id));
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(NOT_FOUND_MESSAGE);
