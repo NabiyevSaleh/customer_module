@@ -32,11 +32,6 @@ public class CreatedIndividualCustomer {
     private String authority;
     private String voen;
 
-    @Min(0)
-    @Max(2)
-    @NotNull
-    private Integer status;
-
     @NotBlank(message = "Should not be empty")
     private CustomerCategory customerCategory;
     private CreatedIndividualCustomerDetail detail;

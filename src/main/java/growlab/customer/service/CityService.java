@@ -1,23 +1,57 @@
 package growlab.customer.service;
 
+import growlab.customer.domain.City;
 import growlab.customer.dto.request.CreatedCity;
 import growlab.customer.dto.response.CityResponse;
+import growlab.customer.exception.IncompatibleCityException;
+import growlab.customer.mapper.CityMapper;
+import growlab.customer.repository.CityRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
-public interface CityService{
+@RequiredArgsConstructor
+public class CityService {
 
-    Integer create(Integer countryId, CreatedCity request);
+    private final CityRepository cityRepository;
+    private final CityMapper cityMapper;
 
-    CityResponse getById(Integer id);
+    public Integer create(Integer countryId, CreatedCity request) {
+        City city = cityMapper.toEntity(request);
+        return cityRepository.create(countryId, city);
+    }
 
-    List<CityResponse> getAllByCountryId(Integer countryId);
+    public CityResponse getById(Integer id) {
+        City city = cityRepository.getById(id);
+        return cityMapper.toResponse(city);
+    }
 
-    void delete(Integer id);
+    public List<CityResponse> getAllByCountryId(Integer countryId) {
+        List<City> cities = cityRepository.getAllByCountryId(countryId);
+        return cities.stream()
+                .map(cityMapper::toResponse)
+                .collect(Collectors.toList());
+    }
 
-    void deleteAllByCountryId(Integer countryId);
+    public void delete(Integer id) {
+        cityRepository.delete(id);
+    }
 
-    void checkCompatibilityWithCountry(Integer cityId, Integer countryId);
+    public void deleteAllByCountryId(Integer countryId) {
+        cityRepository.deleteAllByCountryId(countryId);
+    }
+
+    public void checkCompatibilityWithCountry(Integer cityId, Integer countryId) {
+        City city = cityRepository.getById(cityId);
+        if (!Objects.equals(city.getCountryId(), countryId)) {
+            throw new IncompatibleCityException(
+                    "The city with the given id: " + cityId +
+                            " does not belong to the country with the given id: " + countryId);
+        }
+    }
+
 }

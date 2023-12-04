@@ -5,6 +5,7 @@ import growlab.customer.dto.request.CreatedCorporateCustomer;
 import growlab.customer.dto.request.UpdatedCorporateCustomer;
 import growlab.customer.dto.response.CorporateCustomerResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 

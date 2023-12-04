@@ -45,7 +45,7 @@ public class CorporateCustomerShareholderRepository {
         }
     }
 
-    public List<CorporateCustomerShareholder> getByCustomerId(Integer customerId) {
+    public List<CorporateCustomerShareholder> getAllByCustomerId(Integer customerId) {
         String sql = "SELECT * FROM corporate_customer_shareholder WHERE customer_id = :customerId";
         try {
             List<CorporateCustomerShareholder> result = jdbc.query(sql,

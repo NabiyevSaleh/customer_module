@@ -66,7 +66,7 @@ public class CustomerRepository {
                             .addValue("status", 1),
                     customerRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE);
+            throw new NotFoundException("Individual" + NOT_FOUND_MESSAGE);
         }
     }
 
@@ -80,7 +80,7 @@ public class CustomerRepository {
                             .addValue("status", 1),
                     customerRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE);
+            throw new NotFoundException("Corporate" + NOT_FOUND_MESSAGE);
         }
     }
 
