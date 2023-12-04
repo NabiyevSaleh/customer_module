@@ -49,12 +49,8 @@ public class CountryRepository {
 
     public void delete(Integer id) {
         String sql = "DELETE FROM countries WHERE id = :id";
-        try {
             jdbc.update(sql, new MapSqlParameterSource()
                     .addValue("id", id));
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE);
-        }
     }
 
 }

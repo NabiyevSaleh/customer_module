@@ -24,7 +24,7 @@ public class CustomerRepository {
 
     public Integer create(Customer customer) {
         String sql = "INSERT INTO customers (internal_id, name, surname, middlename, legal_country_id, legal_city_id, registration_address1, registration_address2, registration_address3, registration_address4, residential_address1, residential_address2, residential_address3, residential_address4, authority, voen, customer_type, registration_date, created_by, created_at, auth_by, auth_at, status, customer_category) " +
-                "VALUES(:internalId, :name, :surname, :middleName, :legalCountryId, :legalCityId :registrationAddress1, :registrationAddress2, :registrationAddress3, :registrationAddress4, :residentialAddress1, :residentialAddress2, :residentialAddress3, :residentialAddress4, :authority, :voen, :customerType, :registrationDate, :createdBy, :createdAt, :authBy, :authAt, :status, :customerCategory)";
+                "VALUES(:internalId, :name, :surname, :middleName, :legalCountryId, :legalCityId, :registrationAddress1, :registrationAddress2, :registrationAddress3, :registrationAddress4, :residentialAddress1, :residentialAddress2, :residentialAddress3, :residentialAddress4, :authority, :voen, :customerType, :registrationDate, :createdBy, :createdAt, :authBy, :authAt, :status, :customerCategory)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(sql,
                 new MapSqlParameterSource()
@@ -66,7 +66,7 @@ public class CustomerRepository {
                             .addValue("status", 1),
                     customerRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Individual" + NOT_FOUND_MESSAGE);
+            throw new NotFoundException("Individual " + NOT_FOUND_MESSAGE);
         }
     }
 
@@ -80,7 +80,7 @@ public class CustomerRepository {
                             .addValue("status", 1),
                     customerRowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Corporate" + NOT_FOUND_MESSAGE);
+            throw new NotFoundException("Corporate " + NOT_FOUND_MESSAGE);
         }
     }
 

@@ -45,8 +45,7 @@ public class CorporateCustomerService {
     }
 
     public List<CorporateCustomerResponse> getAll() {
-        List<Customer> customers = customerRepository.getAllByType(CustomerType.CORPORATE);
-        return customers.stream()
+        return customerRepository.getAllByType(CustomerType.CORPORATE).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
 

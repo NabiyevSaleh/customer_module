@@ -49,7 +49,7 @@ public class CorporateCustomerController {
         shareHolderService.addShareholder(customerId, createdShareholder);
     }
 
-    @PutMapping("/{id}/shareholder")
+    @PutMapping("/shareholders/{id}")
     public void updateShareholder(@PathVariable("id") Integer id, @RequestBody UpdatedShareholder shareholder) {
         shareHolderService.updatedShareholder(id, shareholder);
     }
@@ -59,7 +59,7 @@ public class CorporateCustomerController {
         corporateCustomerService.delete(id);
     }
 
-    @DeleteMapping("/shareholder/{id}")
+    @DeleteMapping("/shareholders/{id}")
     public void deleteShareholder(@PathVariable("id") Integer id) {
         shareHolderService.delete(id);
     }

@@ -20,7 +20,6 @@ public class IndividualCustomerDetailService {
 
     public void create(Integer customerId, CreatedIndividualCustomerDetail request) {
         IndividualCustomerDetail detail = detailMapper.toEntity(request);
-        detail.setCustomerId(customerId);
         detailRepository.create(customerId, detail);
     }
 

@@ -64,7 +64,6 @@ public class IndividualCustomerDetailRepository {
                     new MapSqlParameterSource()
                             .addValue("id", id)
                             .addValue("pin", individualCustomerDetail.getPin())
-                            .addValue("customerId", individualCustomerDetail.getCustomerId())
                             .addValue("uniqueIdName", individualCustomerDetail.getUniqueIdName())
                             .addValue("uniqueIdValue", individualCustomerDetail.getUniqueIdValue())
                             .addValue("birthCountryId", individualCustomerDetail.getBirthCountryId())

@@ -13,7 +13,7 @@ public class CorporateCustomerResponse {
     private String legalCountry;
     private String legalCity;
     private String authority;
-    private Integer voen;
+    private String voen;
     private String createdBy;
     private LocalDate createdAt;
     private String authBy;
