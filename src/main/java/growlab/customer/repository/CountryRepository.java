@@ -40,17 +40,13 @@ public class CountryRepository {
 
     public List<Country> getAll() {
         String sql = "SELECT * FROM countries";
-        try {
-            return jdbc.query(sql, countryRowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE);
-        }
+        return jdbc.queryForList(sql, new MapSqlParameterSource(), Country.class);
     }
 
     public void delete(Integer id) {
         String sql = "DELETE FROM countries WHERE id = :id";
-            jdbc.update(sql, new MapSqlParameterSource()
-                    .addValue("id", id));
+        jdbc.update(sql, new MapSqlParameterSource()
+                .addValue("id", id));
     }
 
 }

@@ -41,14 +41,10 @@ public class CityRepository {
 
     public List<City> getAllByCountryId(Integer countryId) {
         String sql = "SELECT * FROM cities WHERE country_id = :countryId";
-        try {
-            return jdbc.query(sql,
-                    new MapSqlParameterSource()
-                            .addValue("countryId", countryId),
-                    cityRowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE);
-        }
+        return jdbc.queryForList(sql,
+                new MapSqlParameterSource()
+                        .addValue("countryId", countryId),
+                City.class);
     }
 
     public void delete(Integer id) {
