@@ -136,6 +136,20 @@ public class CustomerRepository {
         }
     }
 
+    public boolean checkCustomerExist(Integer id) {
+        String sql = "SELECT COUNT(*) FROM customers WHERE id = :id AND status = :status";
+
+        int count = jdbc.queryForObject(sql,
+                new MapSqlParameterSource()
+                        .addValue("id", id)
+                        .addValue("status", 1),
+                Integer.class);
+        if (count == 0) {
+            return false;
+        }
+        return true;
+    }
+
     private String getInternalId() {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < 9; i++) {
@@ -147,7 +161,7 @@ public class CustomerRepository {
     }
 
     private void checkInternalIdExist(String internalId) {
-        String sql = "select count(*) from customers where internal_id = :internalId";
+        String sql = "SELECT COUNT(*) FROM customers WHERE internal_id = :internalId";
 
         int count = jdbc.queryForObject(sql,
                 new MapSqlParameterSource()

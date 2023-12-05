@@ -4,8 +4,10 @@ import growlab.customer.domain.CorporateCustomerShareholder;
 import growlab.customer.dto.request.CreatedShareholder;
 import growlab.customer.dto.request.UpdatedShareholder;
 import growlab.customer.dto.response.ShareholderResponse;
+import growlab.customer.exception.NotFoundException;
 import growlab.customer.mapper.ShareholderMapper;
 import growlab.customer.repository.CorporateCustomerShareholderRepository;
+import growlab.customer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +20,17 @@ public class ShareholderService {
 
     private final CorporateCustomerShareholderRepository shareholderRepository;
     private final ShareholderMapper shareholderMapper;
+    private final CustomerRepository customerRepository;
 
     public void addShareholder(Integer customerId, CreatedShareholder createdShareholder) {
-        CorporateCustomerShareholder corporateCustomerShareholder =
-                shareholderMapper.toEntity(createdShareholder);
-        corporateCustomerShareholder.setCustomerId(customerId);
-        shareholderRepository.create(corporateCustomerShareholder);
+        if (customerRepository.checkCustomerExist(customerId)) {
+            CorporateCustomerShareholder corporateCustomerShareholder =
+                    shareholderMapper.toEntity(createdShareholder);
+            corporateCustomerShareholder.setCustomerId(customerId);
+            shareholderRepository.create(corporateCustomerShareholder);
+        } else {
+            throw new NotFoundException("Customer not found");
+        }
     }
 
     public void createShareholders(Integer customerId, List<CreatedShareholder> createdShareholders) {

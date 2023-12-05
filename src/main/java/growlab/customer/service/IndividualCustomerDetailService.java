@@ -32,7 +32,7 @@ public class IndividualCustomerDetailService {
     public IndividualCustomerDetailResponse getByCustomerId(Integer customerId) {
         IndividualCustomerDetail detail = detailRepository.getByCustomerId(customerId);
         IndividualCustomerDetailResponse detailResponse = detailMapper.toResponse(detail);
-        detailResponse.setBirthCity(countryService.getById(detail.getBirthCountryId()).getName());
+        detailResponse.setBirthCountry(countryService.getById(detail.getBirthCountryId()).getName());
         detailResponse.setBirthCity(cityService.getById(detail.getBirthCityId()).getName());
         return detailResponse;
     }

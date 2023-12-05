@@ -5,8 +5,10 @@ import growlab.customer.domain.CustomerContactDetail;
 import growlab.customer.dto.request.CreatedContactDetail;
 import growlab.customer.dto.request.UpdatedContactDetail;
 import growlab.customer.dto.response.ContactDetailResponse;
+import growlab.customer.exception.NotFoundException;
 import growlab.customer.mapper.CustomerContactDetailMapper;
 import growlab.customer.repository.CustomerContactDetailRepository;
+import growlab.customer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +21,17 @@ public class ContactDetailService {
 
     private final CustomerContactDetailMapper contactDetailMapper;
     private final CustomerContactDetailRepository contactDetailRepository;
+    private final CustomerRepository customerRepository;
 
     public void addContactDetail(Integer customerId, CreatedContactDetail createdContactDetail) {
-        CustomerContactDetail contactDetail = contactDetailMapper.toEntity(createdContactDetail);
-        contactDetail.setCustomerId(customerId);
-        contactDetail.setIsActive(1);
-        contactDetailRepository.create(contactDetail);
+        if (customerRepository.checkCustomerExist(customerId)) {
+            CustomerContactDetail contactDetail = contactDetailMapper.toEntity(createdContactDetail);
+            contactDetail.setCustomerId(customerId);
+            contactDetail.setIsActive(1);
+            contactDetailRepository.create(contactDetail);
+        } else {
+            throw new NotFoundException("Customer not found");
+        }
     }
 
     public void createContactDetails(Integer customerId, List<CreatedContactDetail> createdContactDetails) {
