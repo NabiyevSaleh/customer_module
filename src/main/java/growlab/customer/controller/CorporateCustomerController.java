@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class CorporateCustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody CreatedCorporateCustomer createdCorporateCustomer) {
+    public void create(@RequestBody @Valid CreatedCorporateCustomer createdCorporateCustomer) {
         corporateCustomerService.create(createdCorporateCustomer);
     }
 
@@ -38,7 +39,7 @@ public class CorporateCustomerController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody UpdatedCorporateCustomer customer) {
+    public void update(@PathVariable("id") Integer id, @RequestBody @Valid UpdatedCorporateCustomer customer) {
         corporateCustomerService.update(id, customer);
     }
 
