@@ -54,14 +54,10 @@ public class CorporateCustomerShareholderRepository {
 
     public List<CorporateCustomerShareholder> getAllByCustomerId(Integer customerId) {
         String sql = "SELECT * FROM corporate_customer_shareholder WHERE customer_id = :customerId";
-        try {
-            return jdbc.query(sql,
-                    new MapSqlParameterSource()
-                            .addValue("customerId", customerId),
-                    corporateCustomerShareholderRowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE);
-        }
+        return jdbc.queryForList(sql,
+                new MapSqlParameterSource()
+                        .addValue("customerId", customerId),
+                CorporateCustomerShareholder.class);
     }
 
     public void update(Integer id, CorporateCustomerShareholder shareholder) {
